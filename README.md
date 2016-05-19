@@ -14,8 +14,9 @@ HPE StoreOnce PS Module
 # About
 [*Back to top*](#Title)
 
-Base Author: Markus Kraus
-WebSite: https://mycloudrevolution.wordpress.com/storeonce-powershell-module
+Project Owner: Markus Kraus
+
+Project WebSite: https://mycloudrevolution.wordpress.com/storeonce-powershell-module
 
 <a name="Features">
 # Features
@@ -23,14 +24,26 @@ WebSite: https://mycloudrevolution.wordpress.com/storeonce-powershell-module
 
 * Set-SOCredentials
 
+Creates a Base64 hash for further requests against your StoreOnce system(s). This should be the first Commandlet you use in this module.
 
 * Get-SOSIDs
 
+Lists all ServiceSets from your your StoreOnce system(s).
+
+Outputs: ArrayIP,SSID,Name,Alias,OverallHealth,SerialNumber,Capacity(GB).Free(GB),UserData(GB),DiskData(GB)
+
 * Get-SOStores
+
+Outputs: ArrayIP,SSID,Name,SizeOnDisk(GB),UserDataStored(GB),DedupeRatio
+
+Lists all Catalyst Stores from your your StoreOnce system(s).
 
 <a name="Enhancements">
 # Enhancements
 [*Back to top*](#Title)
+
+Version 0.2.1
+Fixed: Issue #4 - Secure Password Input
 
 Version 0.2
 + Get StoreOnce Stores

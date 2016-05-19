@@ -14,10 +14,11 @@ add-type @"
 
 ###### Set-SOCredentials ##########
 function Set-SOCredentials {
-	$global:SOCred = ""
-	$SOUser = (Read-Host 'D2D username?')
-	$SOPassword = (Read-Host 'D2D password?')
-  	$global:SOCred = [Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes("$($SOUser):$($SOPassword)"))
+	
+	[String]$SOUser = (Read-Host 'D2D username?')
+	$SOPassword = (Read-Host 'D2D password?' -AsSecureString)
+	[String]$SOPasswordClear =  [Runtime.InteropServices.Marshal]::PtrToStringAuto([Runtime.InteropServices.Marshal]::SecureStringToBSTR($SOPassword))
+  	$global:SOCred = [Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes("$($SOUser):$($SOPasswordClear)"))
 	if ($SOCred -eq $null) {Write-Error "No Credential Set"; return}
 	
 	} # end function
@@ -53,7 +54,7 @@ function Get-SOSIDs {
 		for ($i = 0; $i -lt $SIDCount; $i++ ){
 				
 			$row = New-object PSObject
-			$row  | Add-Member -Name D2D-IP -Value $D2DIP -Membertype NoteProperty
+			$row  | Add-Member -Name ArrayIP -Value $D2DIP -Membertype NoteProperty
 			$row  | Add-Member -Name SSID -Value $SSID[$i]-Membertype NoteProperty
 			$row  | Add-Member -Name Name -Value $Name[$i] -Membertype NoteProperty
 			$row  | Add-Member -Name Alias -Value $Alias[$i] -Membertype NoteProperty
@@ -76,7 +77,7 @@ function Get-SOSIDs {
 function Get-SOStores {
 	param ($D2DIPs)
 	
-	if ($SOCred -eq $null) {Write-Error "No Credential Set! Use 'set-SOCredentials'"; return}
+	if ($SOCred -eq $null) {Write-Error "No System Credential Set! Use 'Set-SOCredentials'."; return}
 	$global:SOStores =  New-Object System.Collections.ArrayList
 	
 	foreach ($D2DIP in $D2DIPs) {
@@ -112,7 +113,7 @@ function Get-SOStores {
 			for ($i = 0; $i -lt $StoresCount; $i++ ){
 						
 				$row = New-object PSObject
-				$row  | Add-Member -Name D2D-IP -Value $D2DIP -Membertype NoteProperty
+				$row  | Add-Member -Name ArrayIP -Value $D2DIP -Membertype NoteProperty
 				$row  | Add-Member -Name SSID -Value $SSID[$i] -Membertype NoteProperty
 				$row  | Add-Member -Name Name -Value $Name[$i] -Membertype NoteProperty
 				$row  | Add-Member -Name "SizeOnDisk(GB)" -Value ([math]::Round(($SizeOnDisk[$i]),2)) -Membertype NoteProperty
