@@ -18,7 +18,7 @@ function Set-SOCredentials {
 	[String]$SOUser = (Read-Host 'D2D username?')
 	$SOPassword = (Read-Host 'D2D password?' -AsSecureString)
 	[String]$SOPasswordClear =  [Runtime.InteropServices.Marshal]::PtrToStringAuto([Runtime.InteropServices.Marshal]::SecureStringToBSTR($SOPassword))
-  	$global:SOCred = [Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes("$($SOUser):$($SOPassword)"))
+  	$global:SOCred = [Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes("$($SOUser):$($SOPasswordClear)"))
 	if ($SOCred -eq $null) {Write-Error "No Credential Set"; return}
 	
 	} # end function
