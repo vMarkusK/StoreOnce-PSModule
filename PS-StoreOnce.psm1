@@ -59,10 +59,10 @@ function Get-SOSIDs {
 			$row  | Add-Member -Name Alias -Value $Alias[$i] -Membertype NoteProperty
 			$row  | Add-Member -Name OverallHealth -Value $OverallHealth[$i] -Membertype NoteProperty
 			$row  | Add-Member -Name SerialNumber -Value $SerialNumber[$i] -Membertype NoteProperty
-			$row  | Add-Member -Name CapacityGBytes -Value ([math]::Round(($CapacityBytes[$i] / 1073741824),2))  -Membertype NoteProperty
-			$row  | Add-Member -Name FreeGBytes -Value ([math]::Round(($FreeBytes[$i] / 1073741824),2))  -Membertype NoteProperty
-			$row  | Add-Member -Name UserGBytes -Value ([math]::Round(($UserBytes[$i] / 1073741824),2))  -Membertype NoteProperty
-			$row  | Add-Member -Name DiskGBytes -Value ([math]::Round(($DiskBytes[$i] / 1073741824),2))  -Membertype NoteProperty
+			$row  | Add-Member -Name "Capacity(GB)" -Value ([math]::Round(($CapacityBytes[$i] / 1073741824),2))  -Membertype NoteProperty
+			$row  | Add-Member -Name "Free(GB)" -Value ([math]::Round(($FreeBytes[$i] / 1073741824),2))  -Membertype NoteProperty
+			$row  | Add-Member -Name "UserData(GB)" -Value ([math]::Round(($UserBytes[$i] / 1073741824),2))  -Membertype NoteProperty
+			$row  | Add-Member -Name "DiskData(GB)" -Value ([math]::Round(($DiskBytes[$i] / 1073741824),2))  -Membertype NoteProperty
 			
 			$SOSIDs += $row
 			
@@ -72,3 +72,60 @@ function Get-SOSIDs {
 	Return $SOSIDs
 	
 	} # end function
+
+###### Get-SOStores ##########
+function Get-SOStores {
+	param ($D2DIPs)
+	
+	if ($SOCred -eq $null) {Write-Error "No Credential Set! Use 'set-SOCredentials'"; return}
+	$global:SOStores =  New-Object System.Collections.ArrayList
+	
+	foreach ($D2DIP in $D2DIPs) {
+		$SIDCall = @{uri = "https://$D2DIP/storeonceservices/cluster/servicesets/";
+					Method = 'GET'; #(or POST, or whatever)
+						Headers = @{Authorization = 'Basic ' + $SOCred;
+									Accept = 'text/xml'
+				} 
+			} 
+		
+		$SIDsResponse = Invoke-RestMethod @SIDCall
+		$SIDCount = ($SIDsResponse.document.servicesets.serviceset).count
+		if ($SIDCount -eq $null) {$SIDCount = 1}
+		
+		for ($x = 1; $x -le $SIDCount; $x++ ){
+			$StoreInf = @{uri = "https://$D2DIP/storeonceservices/cluster/servicesets/$x/services/cat/stores/";
+						Method = 'GET'; #(or POST, or whatever)
+							Headers = @{Authorization = 'Basic ' + $SOCred;
+										Accept = 'text/xml'
+					} 
+				} 
+			$StoreInfResponse = Invoke-RestMethod @StoreInf
+		
+			[Array] $Name = $StoreInfResponse.document.stores.store.properties.name
+			[Array] $SSID = $StoreInfResponse.document.stores.store.properties.ssid
+			[Array] $UserDataStored = $StoreInfResponse.document.stores.store.properties.userdatastored
+			[Array] $SizeOnDisk = $StoreInfResponse.document.stores.store.properties.sizeondisk
+			[Array] $DDRate = $StoreInfResponse.document.stores.store.properties.deduperatio
+			$StoresCount = ($Name).count
+		
+			$DDRate = $DDRate | foreach {$i=1} {if ($i++ %2){$_}}
+		
+			for ($i = 0; $i -lt $StoresCount; $i++ ){
+						
+				$row = New-object PSObject
+				$row  | Add-Member -Name D2D-IP -Value $D2DIP -Membertype NoteProperty
+				$row  | Add-Member -Name SSID -Value $SSID[$i] -Membertype NoteProperty
+				$row  | Add-Member -Name Name -Value $Name[$i] -Membertype NoteProperty
+				$row  | Add-Member -Name "SizeOnDisk(GB)" -Value ([math]::Round(($SizeOnDisk[$i]),2)) -Membertype NoteProperty
+				$row  | Add-Member -Name "UserDataStored(GB)" -Value ([math]::Round(($UserDataStored[$i]),2)) -Membertype NoteProperty
+				$row  | Add-Member -Name DedupeRatio -Value $DDRate[$i] -Membertype NoteProperty
+				$SOStores += $row
+			
+		
+			}
+		}
+	
+		} 
+		
+	Return $SOStores
+}# end function
