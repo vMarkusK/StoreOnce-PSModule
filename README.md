@@ -26,10 +26,16 @@ WebSite: https://mycloudrevolution.wordpress.com/storeonce-powershell-module
 
 * Get-SOSIDs
 
+* Get-SOStores
+
 <a name="Enhancements">
 # Enhancements
 [*Back to top*](#Title)
 
+Version 0.2
++ Get StoreOnce Stores
+
 Version 0.1
 + Credential Handling for REST Calls
 + Get StoreOnce SIDs
+
