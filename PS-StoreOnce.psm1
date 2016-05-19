@@ -64,7 +64,7 @@ function Get-SOSIDs {
 			$row  | Add-Member -Name "UserData(GB)" -Value ([math]::Round(($UserBytes[$i] / 1073741824),2))  -Membertype NoteProperty
 			$row  | Add-Member -Name "DiskData(GB)" -Value ([math]::Round(($DiskBytes[$i] / 1073741824),2))  -Membertype NoteProperty
 			$SOSIDs += $row
-						
+			
 			} 
 		}
 	
