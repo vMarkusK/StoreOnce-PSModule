@@ -122,10 +122,11 @@ function Get-SOStores {
 				$SOStores += $row
 			
 		
+				}
 			}
-		}
 	
 		} 
 		
 	Return $SOStores
-}# end function
+	
+	}# end function
