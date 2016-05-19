@@ -30,13 +30,20 @@ Creates a Base64 hash for further requests against your StoreOnce system(s). Thi
 
 Lists all ServiceSets from your your StoreOnce system(s).
 
+Outputs: ArrayIP,SSID,Name,Alias,OverallHealth,SerialNumber,Capacity(GB).Free(GB),UserData(GB),DiskData(GB)
+
 * Get-SOStores
+
+Outputs: ArrayIP,SSID,Name,SizeOnDisk(GB),UserDataStored(GB),DedupeRatio
 
 Lists all Catalyst Stores from your your StoreOnce system(s).
 
 <a name="Enhancements">
 # Enhancements
 [*Back to top*](#Title)
+
+Version 0.2.1
+Fixed: Issue #4 - Secure Password Input
 
 Version 0.2
 + Get StoreOnce Stores

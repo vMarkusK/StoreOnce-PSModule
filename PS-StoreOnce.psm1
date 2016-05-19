@@ -54,7 +54,7 @@ function Get-SOSIDs {
 		for ($i = 0; $i -lt $SIDCount; $i++ ){
 				
 			$row = New-object PSObject
-			$row  | Add-Member -Name D2D-IP -Value $D2DIP -Membertype NoteProperty
+			$row  | Add-Member -Name ArrayIP -Value $D2DIP -Membertype NoteProperty
 			$row  | Add-Member -Name SSID -Value $SSID[$i]-Membertype NoteProperty
 			$row  | Add-Member -Name Name -Value $Name[$i] -Membertype NoteProperty
 			$row  | Add-Member -Name Alias -Value $Alias[$i] -Membertype NoteProperty
@@ -113,7 +113,7 @@ function Get-SOStores {
 			for ($i = 0; $i -lt $StoresCount; $i++ ){
 						
 				$row = New-object PSObject
-				$row  | Add-Member -Name D2D-IP -Value $D2DIP -Membertype NoteProperty
+				$row  | Add-Member -Name ArrayIP -Value $D2DIP -Membertype NoteProperty
 				$row  | Add-Member -Name SSID -Value $SSID[$i] -Membertype NoteProperty
 				$row  | Add-Member -Name Name -Value $Name[$i] -Membertype NoteProperty
 				$row  | Add-Member -Name "SizeOnDisk(GB)" -Value ([math]::Round(($SizeOnDisk[$i]),2)) -Membertype NoteProperty
