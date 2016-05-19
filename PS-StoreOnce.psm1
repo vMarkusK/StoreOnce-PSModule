@@ -14,9 +14,10 @@ add-type @"
 
 ###### Set-SOCredentials ##########
 function Set-SOCredentials {
-	$global:SOCred = ""
-	$SOUser = (Read-Host 'D2D username?')
-	$SOPassword = (Read-Host 'D2D password?')
+	
+	[String]$SOUser = (Read-Host 'D2D username?')
+	$SOPassword = (Read-Host 'D2D password?' -AsSecureString)
+	[String]$SOPasswordClear =  [Runtime.InteropServices.Marshal]::PtrToStringAuto([Runtime.InteropServices.Marshal]::SecureStringToBSTR($SOPassword))
   	$global:SOCred = [Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes("$($SOUser):$($SOPassword)"))
 	if ($SOCred -eq $null) {Write-Error "No Credential Set"; return}
 	
@@ -76,7 +77,7 @@ function Get-SOSIDs {
 function Get-SOStores {
 	param ($D2DIPs)
 	
-	if ($SOCred -eq $null) {Write-Error "No Credential Set! Use 'set-SOCredentials'"; return}
+	if ($SOCred -eq $null) {Write-Error "No System Credential Set! Use 'Set-SOCredentials'."; return}
 	$global:SOStores =  New-Object System.Collections.ArrayList
 	
 	foreach ($D2DIP in $D2DIPs) {
