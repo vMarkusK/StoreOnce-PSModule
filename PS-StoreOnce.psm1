@@ -1,5 +1,4 @@
-﻿###### ignore invalid SSL Certs ##########
-add-type @"
+﻿add-type @"
     using System.Net;
     using System.Security.Cryptography.X509Certificates;
     public class TrustAllCertsPolicy : ICertificatePolicy {
@@ -12,7 +11,18 @@ add-type @"
 "@
 [System.Net.ServicePointManager]::CertificatePolicy = New-Object TrustAllCertsPolicy
 
-###### Set-SOCredentials ##########
+<# 
+ .Synopsis
+	Creates a Base64 hash for further requests against your StoreOnce system(s).
+
+ .Description
+	Creates a Base64 hash for further requests against your StoreOnce system(s). 
+	This should be the first Commandlet you use from this module.
+  
+ .Example
+   Set-SOCredentials
+
+#>
 function Set-SOCredentials {
 	
 	[String]$SOUser = (Read-Host 'D2D username?')
@@ -23,12 +33,29 @@ function Set-SOCredentials {
 	
 	} # end function
 
-###### Get-SOSIDs ##########
+<# 
+ .Synopsis
+	Lists all ServiceSets from your your StoreOnce system(s).
+
+ .Description
+	Lists all ServiceSets from your your StoreOnce system(s).
+	Outputs: ArrayIP,SSID,Name,Alias,OverallHealth,SerialNumber,Capacity(GB).Free(GB),UserData(GB),DiskData(GB)
+	
+ .Parameter D2DIPs
+  IP Address of your StoreOnce system(s).
+
+ .Example
+   Get-SOSIDs -D2DIPs 192.168.2.1, 192.168.2.2
+
+#>
 function Get-SOSIDs {
-	param ($D2DIPs)
+	param (
+	[parameter(Mandatory=$true)]
+	$D2DIPs
+	)
 	
 	if ($SOCred -eq $null) {Write-Error "No Credential Set! Use 'set-SOCredentials'"; return}
-	$global:SOSIDs =  New-Object System.Collections.ArrayList
+	$SOSIDs =  New-Object System.Collections.ArrayList
 	
 	foreach ($D2DIP in $D2DIPs) {
 		$SIDCall = @{uri = "https://$D2DIP/storeonceservices/cluster/servicesets/";
@@ -73,12 +100,29 @@ function Get-SOSIDs {
 	
 	} # end function
 
-###### Get-SOStores ##########
-function Get-SOStores {
-	param ($D2DIPs)
+<# 
+ .Synopsis
+	Lists all Catalyst Stores from your your StoreOnce system(s).
+
+ .Description
+	Lists all Catalyst Stores from your your StoreOnce system(s).
+	Outputs: ArrayIP,SSID,Name,SizeOnDisk(GB),UserDataStored(GB),DedupeRatio
+	
+ .Parameter D2DIPs
+  IP Address of your StoreOnce system(s).
+
+ .Example
+   Get-SOCatStores -D2DIPs 192.168.2.1, 192.168.2.2
+
+#>
+function Get-SOCatStores {
+	param (
+	[parameter(Mandatory=$true)]
+	$D2DIPs
+	)
 	
 	if ($SOCred -eq $null) {Write-Error "No System Credential Set! Use 'Set-SOCredentials'."; return}
-	$global:SOStores =  New-Object System.Collections.ArrayList
+	$SOCatStores =  New-Object System.Collections.ArrayList
 	
 	foreach ($D2DIP in $D2DIPs) {
 		$SIDCall = @{uri = "https://$D2DIP/storeonceservices/cluster/servicesets/";
@@ -119,7 +163,7 @@ function Get-SOStores {
 				$row  | Add-Member -Name "SizeOnDisk(GB)" -Value ([math]::Round(($SizeOnDisk[$i]),2)) -Membertype NoteProperty
 				$row  | Add-Member -Name "UserDataStored(GB)" -Value ([math]::Round(($UserDataStored[$i]),2)) -Membertype NoteProperty
 				$row  | Add-Member -Name DedupeRatio -Value $DDRate[$i] -Membertype NoteProperty
-				$SOStores += $row
+				$SOCatStores += $row
 			
 		
 				}
@@ -127,6 +171,81 @@ function Get-SOStores {
 	
 		} 
 		
-	Return $SOStores
+	Return $SOCatStores
+	
+	}# end function
+
+<# 
+ .Synopsis
+	Lists all NAS Stores from your your StoreOnce system(s).
+
+ .Description
+	Lists all NAS Stores from your your StoreOnce system(s).
+	Outputs: ArrayIP,SSID,Name,AccessProtocol,SizeOnDisk(GB),UserDataStored(GB),DedupeRatio
+	
+ .Parameter D2DIPs
+  IP Address of your StoreOnce system(s).
+
+ .Example
+   Get-SONasShares -D2DIPs 192.168.2.1, 192.168.2.2
+
+#>
+function Get-SONasShares {
+	param (
+	[parameter(Mandatory=$true)]
+	$D2DIPs
+	)
+	
+	if ($SOCred -eq $null) {Write-Error "No System Credential Set! Use 'Set-SOCredentials'."; return}
+	$SONasShares =  New-Object System.Collections.ArrayList
+	
+	foreach ($D2DIP in $D2DIPs) {
+		$SIDCall = @{uri = "https://$D2DIP/storeonceservices/cluster/servicesets/";
+					Method = 'GET'; #(or POST, or whatever)
+						Headers = @{Authorization = 'Basic ' + $SOCred;
+									Accept = 'text/xml'
+				} 
+			} 
+		
+		$SIDsResponse = Invoke-RestMethod @SIDCall
+		$SIDCount = ($SIDsResponse.document.servicesets.serviceset).count
+		if ($SIDCount -eq $null) {$SIDCount = 1}
+		
+		for ($x = 1; $x -le $SIDCount; $x++ ){
+			$ShareInf = @{uri = "https://$D2DIP/storeonceservices/cluster/servicesets/$x/services/nas/shares/";
+						Method = 'GET'; #(or POST, or whatever)
+							Headers = @{Authorization = 'Basic ' + $SOCred;
+										Accept = 'text/xml'
+					} 
+				} 
+			$ShareInfResponse = Invoke-RestMethod @ShareInf
+		
+			[Array] $Name = $ShareInfResponse.document.shares.share.properties.name
+			[Array] $AccessProtocol = $ShareInfResponse.document.shares.share.properties.accessProtocol
+			[Array] $SSID = $ShareInfResponse.document.shares.share.properties.ssid
+			[Array] $UserDataStored = $ShareInfResponse.document.shares.share.properties.userdatastored
+			[Array] $SizeOnDisk = $ShareInfResponse.document.shares.share.properties.sizeondisk
+			[Array] $DDRate = $ShareInfResponse.document.shares.share.properties.deduperatio
+			$ShareCount = ($Name).count
+		
+			for ($i = 0; $i -lt $ShareCount; $i++ ){
+						
+				$row = New-object PSObject
+				$row  | Add-Member -Name ArrayIP -Value $D2DIP -Membertype NoteProperty
+				$row  | Add-Member -Name SSID -Value $SSID[$i] -Membertype NoteProperty
+				$row  | Add-Member -Name Name -Value $Name[$i] -Membertype NoteProperty
+				$row  | Add-Member -Name AccessProtocol -Value $AccessProtocol[$i] -Membertype NoteProperty
+				$row  | Add-Member -Name "SizeOnDisk(GB)" -Value ([math]::Round(($SizeOnDisk[$i]),2)) -Membertype NoteProperty
+				$row  | Add-Member -Name "UserDataStored(GB)" -Value ([math]::Round(($UserDataStored[$i]),2)) -Membertype NoteProperty
+				$row  | Add-Member -Name DedupeRatio -Value $DDRate[$i] -Membertype NoteProperty
+				$SONasShares += $row
+			
+		
+				}
+			}
+	
+		} 
+		
+	Return $SONasShares
 	
 	}# end function
