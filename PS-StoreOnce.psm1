@@ -1,5 +1,4 @@
-﻿###### ignore invalid SSL Certs ##########
-add-type @"
+﻿add-type @"
     using System.Net;
     using System.Security.Cryptography.X509Certificates;
     public class TrustAllCertsPolicy : ICertificatePolicy {
@@ -12,7 +11,18 @@ add-type @"
 "@
 [System.Net.ServicePointManager]::CertificatePolicy = New-Object TrustAllCertsPolicy
 
-###### Set-SOCredentials ##########
+<# 
+ .Synopsis
+	Creates a Base64 hash for further requests against your StoreOnce system(s).
+
+ .Description
+	Creates a Base64 hash for further requests against your StoreOnce system(s). 
+	This should be the first Commandlet you use from this module.
+  
+ .Example
+   Set-SOCredentials
+
+#>
 function Set-SOCredentials {
 	
 	[String]$SOUser = (Read-Host 'D2D username?')
@@ -23,12 +33,27 @@ function Set-SOCredentials {
 	
 	} # end function
 
-###### Get-SOSIDs ##########
+<# 
+ .Synopsis
+	Lists all ServiceSets from your your StoreOnce system(s).
+
+ .Description
+	Lists all ServiceSets from your your StoreOnce system(s).
+	Outputs: ArrayIP,SSID,Name,Alias,OverallHealth,SerialNumber,Capacity(GB).Free(GB),UserData(GB),DiskData(GB)
+	
+ .Parameter D2DIPs
+  IP Address of your StoreOnce system(s).
+
+ .Example
+   Get-SOSIDs -D2DIPs 192.168.2.1, 192.168.2.2
+
+#>
 function Get-SOSIDs {
 	param ($D2DIPs)
 	
+	if ($D2DIPs -eq $null) {Write-Error "No IPs defined'."; return}
 	if ($SOCred -eq $null) {Write-Error "No Credential Set! Use 'set-SOCredentials'"; return}
-	$global:SOSIDs =  New-Object System.Collections.ArrayList
+	$SOSIDs =  New-Object System.Collections.ArrayList
 	
 	foreach ($D2DIP in $D2DIPs) {
 		$SIDCall = @{uri = "https://$D2DIP/storeonceservices/cluster/servicesets/";
@@ -73,12 +98,27 @@ function Get-SOSIDs {
 	
 	} # end function
 
-###### Get-SOStores ##########
-function Get-SOStores {
+<# 
+ .Synopsis
+	Lists all Catalyst Stores from your your StoreOnce system(s).
+
+ .Description
+	Lists all Catalyst Stores from your your StoreOnce system(s).
+	Outputs: ArrayIP,SSID,Name,SizeOnDisk(GB),UserDataStored(GB),DedupeRatio
+	
+ .Parameter D2DIPs
+  IP Address of your StoreOnce system(s).
+
+ .Example
+   Get-SOCatStores -D2DIPs 192.168.2.1, 192.168.2.2
+
+#>
+function Get-SOCatStores {
 	param ($D2DIPs)
 	
+	if ($D2DIPs -eq $null) {Write-Error "No IPs defined'."; return}
 	if ($SOCred -eq $null) {Write-Error "No System Credential Set! Use 'Set-SOCredentials'."; return}
-	$global:SOStores =  New-Object System.Collections.ArrayList
+	$SOCatStores =  New-Object System.Collections.ArrayList
 	
 	foreach ($D2DIP in $D2DIPs) {
 		$SIDCall = @{uri = "https://$D2DIP/storeonceservices/cluster/servicesets/";
@@ -119,7 +159,7 @@ function Get-SOStores {
 				$row  | Add-Member -Name "SizeOnDisk(GB)" -Value ([math]::Round(($SizeOnDisk[$i]),2)) -Membertype NoteProperty
 				$row  | Add-Member -Name "UserDataStored(GB)" -Value ([math]::Round(($UserDataStored[$i]),2)) -Membertype NoteProperty
 				$row  | Add-Member -Name DedupeRatio -Value $DDRate[$i] -Membertype NoteProperty
-				$SOStores += $row
+				$SOCatStores += $row
 			
 		
 				}
@@ -127,6 +167,6 @@ function Get-SOStores {
 	
 		} 
 		
-	Return $SOStores
+	Return $SOCatStores
 	
 	}# end function

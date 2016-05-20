@@ -33,7 +33,7 @@ Lists all ServiceSets from your your StoreOnce system(s).
 
 Outputs: ArrayIP,SSID,Name,Alias,OverallHealth,SerialNumber,Capacity(GB).Free(GB),UserData(GB),DiskData(GB)
 
-* Get-SOStores
+* Get-SOCatStores
 
 Lists all Catalyst Stores from your your StoreOnce system(s).
 
