@@ -106,7 +106,7 @@ function Get-SOSIDs {
 
  .Description
 	Lists all Catalyst Stores from your StoreOnce system(s).
-	Outputs: ArrayIP,SSID,Name,SizeOnDisk(GB),UserDataStored(GB),DedupeRatio
+	Outputs: ArrayIP,SSID,Name,ID,SizeOnDisk(GB),UserDataStored(GB),DedupeRatio
 	
  .Parameter D2DIPs
   IP Address of your StoreOnce system(s).
@@ -144,9 +144,10 @@ function Get-SOCatStores {
 					} 
 				} 
 			$StoreInfResponse = Invoke-RestMethod @StoreInf
-		
-			[Array] $Name = $StoreInfResponse.document.stores.store.properties.name
+			
 			[Array] $SSID = $StoreInfResponse.document.stores.store.properties.ssid
+			[Array] $Name = $StoreInfResponse.document.stores.store.properties.name
+			[Array] $ID = $StoreInfResponse.document.stores.store.properties.id
 			[Array] $UserDataStored = $StoreInfResponse.document.stores.store.properties.userdatastored
 			[Array] $SizeOnDisk = $StoreInfResponse.document.stores.store.properties.sizeondisk
 			[Array] $DDRate = $StoreInfResponse.document.stores.store.properties.deduperatio
@@ -160,6 +161,7 @@ function Get-SOCatStores {
 				$row  | Add-Member -Name ArrayIP -Value $D2DIP -Membertype NoteProperty
 				$row  | Add-Member -Name SSID -Value $SSID[$i] -Membertype NoteProperty
 				$row  | Add-Member -Name Name -Value $Name[$i] -Membertype NoteProperty
+				$row  | Add-Member -Name ID -Value $ID[$i] -Membertype NoteProperty
 				$row  | Add-Member -Name "SizeOnDisk(GB)" -Value ([math]::Round(($SizeOnDisk[$i]),2)) -Membertype NoteProperty
 				$row  | Add-Member -Name "UserDataStored(GB)" -Value ([math]::Round(($UserDataStored[$i]),2)) -Membertype NoteProperty
 				$row  | Add-Member -Name DedupeRatio -Value $DDRate[$i] -Membertype NoteProperty
@@ -181,7 +183,7 @@ function Get-SOCatStores {
 
  .Description
 	Lists all NAS Stores from your StoreOnce system(s).
-	Outputs: ArrayIP,SSID,Name,AccessProtocol,SizeOnDisk(GB),UserDataStored(GB),DedupeRatio
+	Outputs: ArrayIP,SSID,Name,ID,AccessProtocol,SizeOnDisk(GB),UserDataStored(GB),DedupeRatio
 	
  .Parameter D2DIPs
   IP Address of your StoreOnce system(s).
@@ -221,6 +223,7 @@ function Get-SONasShares {
 			$ShareInfResponse = Invoke-RestMethod @ShareInf
 		
 			[Array] $Name = $ShareInfResponse.document.shares.share.properties.name
+			[Array] $ID = $ShareInfResponse.document.shares.share.properties.id
 			[Array] $AccessProtocol = $ShareInfResponse.document.shares.share.properties.accessProtocol
 			[Array] $SSID = $ShareInfResponse.document.shares.share.properties.ssid
 			[Array] $UserDataStored = $ShareInfResponse.document.shares.share.properties.userdatastored
@@ -234,6 +237,7 @@ function Get-SONasShares {
 				$row  | Add-Member -Name ArrayIP -Value $D2DIP -Membertype NoteProperty
 				$row  | Add-Member -Name SSID -Value $SSID[$i] -Membertype NoteProperty
 				$row  | Add-Member -Name Name -Value $Name[$i] -Membertype NoteProperty
+				$row  | Add-Member -Name ID -Value $ID[$i] -Membertype NoteProperty
 				$row  | Add-Member -Name AccessProtocol -Value $AccessProtocol[$i] -Membertype NoteProperty
 				$row  | Add-Member -Name "SizeOnDisk(GB)" -Value ([math]::Round(($SizeOnDisk[$i]),2)) -Membertype NoteProperty
 				$row  | Add-Member -Name "UserDataStored(GB)" -Value ([math]::Round(($UserDataStored[$i]),2)) -Membertype NoteProperty
@@ -324,5 +328,65 @@ function Get-SOCatClients {
 		} 
 		
 	Return $SOCatClients
+	
+	}# end function
+	
+<# 
+ .Synopsis
+	Lists Client Access Permissions of a Catalyst Store.
+
+ .Description
+	Lists Client Access Permissions of a Catalyst Store.
+	Outputs: Client,allowAccess
+	
+ .Parameter D2DIP
+  IP Address of your StoreOnce system.
+  
+ .Parameter CatStore
+  Name of your StoreOnce Store.
+
+ .Example
+   Get-SOCatStoreAccess -D2DIP 192.168.2.1 -CatStore YourStore
+
+#>
+function Get-SOCatStoreAccess {
+	param (
+	[parameter(Mandatory=$true)]
+	$D2DIP,
+	[parameter(Mandatory=$true)]
+	$CatStore
+	)
+	
+	if ($SOCred -eq $null) {Write-Error "No System Credential Set! Use 'Set-SOCredentials'."; return}
+	$SOCatStoreAccess =  New-Object System.Collections.ArrayList
+	
+	$myCatStore = Get-SOCatStores -D2DIPs $D2DIP | Where {$_.Name -eq $CatStore}
+	if ($myCatStore -eq $null) {Write-Error "No Store named $CatStore found."; return}
+	$mySSID = ($myCatStore).SSID
+	$myID = ($myCatStore).ID
+	
+	$StoreAcc = @{uri = "https://$D2DIP/storeonceservices/cluster/servicesets/$mySSID/services/cat/stores/$myID/permissions";
+				Method = 'GET'; #(or POST, or whatever)
+				Headers = @{Authorization = 'Basic ' + $SOCred;
+							Accept = 'text/xml'
+				} 
+			} 
+	$StoreAccResponse = Invoke-RestMethod @StoreAcc
+			
+	[Array] $Name = $StoreAccResponse.document.permittedClients.permittedClient.properties.name
+	[Array] $allowAccess = $StoreAccResponse.document.permittedClients.permittedClient.properties.allowAccess
+	
+	$ClientCount = ($Name).count
+			
+	for ($i = 0; $i -lt $ClientCount; $i++ ){
+						
+		$row = New-object PSObject
+		$row  | Add-Member -Name Client -Value $Name[$i] -Membertype NoteProperty
+		$row  | Add-Member -Name allowAccess -Value $allowAccess[$i] -Membertype NoteProperty
+		$SOCatStoreAccess += $row
+			
+		}
+	
+	Return $SOCatStoreAccess | where {$_.allowAccess -eq "true"}
 	
 	}# end function

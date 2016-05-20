@@ -37,13 +37,13 @@ Outputs: ArrayIP,SSID,Name,Alias,OverallHealth,SerialNumber,Capacity(GB).Free(GB
 
 Lists all Catalyst Stores from your StoreOnce system(s).
 
-Outputs: ArrayIP,SSID,Name,SizeOnDisk(GB),UserDataStored(GB),DedupeRatio
+Outputs: ArrayIP,SSID,Name,ID,SizeOnDisk(GB),UserDataStored(GB),DedupeRatio
 
 * Get-SONasShares
 
 Lists all NAS Stores from your StoreOnce system(s).
 
-Outputs: ArrayIP,SSID,Name,AccessProtocol,SizeOnDisk(GB),UserDataStored(GB),DedupeRatio
+Outputs: ArrayIP,SSID,Name,ID,AccessProtocol,SizeOnDisk(GB),UserDataStored(GB),DedupeRatio
 
 * Get-SOCatClients
 
@@ -51,9 +51,21 @@ Lists all Catalyst Clients from your StoreOnce system(s).
 
 Outputs: ArrayIP,SSID,Name,ID,Description,canCreateStores,canSetServerProperties,canManageClientPermissions
 
+* Get-SOCatStoreAccess
+
+Lists Clients with Access Permissions of a Catalyst Store.
+
+Outputs: Client,allowAccess
+
 <a name="Enhancements">
 # Enhancements
 [*Back to top*](#Title)
+
+Version 0.5
++ Get Clients (Users) with Access Permissions of a Catalyst Store
+
+Version 0.4.1
++ Enhanced: Added ID not NAS and Catalyst
 
 Version 0.4
 + Get StoreOnce Catalyst Clients (User)
