@@ -35,10 +35,10 @@ function Set-SOCredentials {
 
 <# 
  .Synopsis
-	Lists all ServiceSets from your your StoreOnce system(s).
+	Lists all ServiceSets from your StoreOnce system(s).
 
  .Description
-	Lists all ServiceSets from your your StoreOnce system(s).
+	Lists all ServiceSets from your StoreOnce system(s).
 	Outputs: ArrayIP,SSID,Name,Alias,OverallHealth,SerialNumber,Capacity(GB).Free(GB),UserData(GB),DiskData(GB)
 	
  .Parameter D2DIPs
@@ -102,10 +102,10 @@ function Get-SOSIDs {
 
 <# 
  .Synopsis
-	Lists all Catalyst Stores from your your StoreOnce system(s).
+	Lists all Catalyst Stores from your StoreOnce system(s).
 
  .Description
-	Lists all Catalyst Stores from your your StoreOnce system(s).
+	Lists all Catalyst Stores from your StoreOnce system(s).
 	Outputs: ArrayIP,SSID,Name,SizeOnDisk(GB),UserDataStored(GB),DedupeRatio
 	
  .Parameter D2DIPs
@@ -177,10 +177,10 @@ function Get-SOCatStores {
 
 <# 
  .Synopsis
-	Lists all NAS Stores from your your StoreOnce system(s).
+	Lists all NAS Stores from your StoreOnce system(s).
 
  .Description
-	Lists all NAS Stores from your your StoreOnce system(s).
+	Lists all NAS Stores from your StoreOnce system(s).
 	Outputs: ArrayIP,SSID,Name,AccessProtocol,SizeOnDisk(GB),UserDataStored(GB),DedupeRatio
 	
  .Parameter D2DIPs
@@ -247,5 +247,82 @@ function Get-SONasShares {
 		} 
 		
 	Return $SONasShares
+	
+	}# end function
+
+<# 
+ .Synopsis
+	Lists all Catalyst Clients from your StoreOnce system(s).
+
+ .Description
+	Lists all Catalyst Clients from your StoreOnce system(s).
+	Outputs: ArrayIP,SSID,Name,ID,Description,canCreateStores,canSetServerProperties,canManageClientPermissions
+	
+ .Parameter D2DIPs
+  IP Address of your StoreOnce system(s).
+
+ .Example
+   Get-SOCatClients -D2DIPs 192.168.2.1, 192.168.2.2
+
+#>
+function Get-SOCatClients {
+	param (
+	[parameter(Mandatory=$true)]
+	$D2DIPs
+	)
+	
+	if ($SOCred -eq $null) {Write-Error "No System Credential Set! Use 'Set-SOCredentials'."; return}
+	$SOCatClients =  New-Object System.Collections.ArrayList
+	
+	foreach ($D2DIP in $D2DIPs) {
+		$SIDCall = @{uri = "https://$D2DIP/storeonceservices/cluster/servicesets/";
+					Method = 'GET'; #(or POST, or whatever)
+						Headers = @{Authorization = 'Basic ' + $SOCred;
+									Accept = 'text/xml'
+				} 
+			} 
+		
+		$SIDsResponse = Invoke-RestMethod @SIDCall
+		$SIDCount = ($SIDsResponse.document.servicesets.serviceset).count
+		if ($SIDCount -eq $null) {$SIDCount = 1}
+		
+		for ($x = 1; $x -le $SIDCount; $x++ ){
+			$ClientReq = @{uri = "https://$D2DIP/storeonceservices/cluster/servicesets/$x/services/cat/configs/clients/";
+						Method = 'GET'; #(or POST, or whatever)
+							Headers = @{Authorization = 'Basic ' + $SOCred;
+										Accept = 'text/xml'
+					} 
+				} 
+			$ClientResponse = Invoke-RestMethod @ClientReq
+		
+			[Array] $Name = $ClientResponse.document.clients.client.properties.name
+			[Array] $ID = $ClientResponse.document.clients.client.properties.id
+			[Array] $Description = $ClientResponse.document.clients.client.properties.description
+			[Array] $canCreateStores = $ClientResponse.document.clients.client.properties.canCreateStores
+			[Array] $canSetServerProperties = $ClientResponse.document.clients.client.properties.canSetServerProperties
+			[Array] $canManageClientPermissions = $ClientResponse.document.clients.client.properties.canManageClientPermissions
+			$ClientCount = ($Name).count
+		
+					
+			for ($i = 0; $i -lt $ClientCount; $i++ ){
+						
+				$row = New-object PSObject
+				$row  | Add-Member -Name ArrayIP -Value $D2DIP -Membertype NoteProperty
+				$row  | Add-Member -Name SSID -Value $x -Membertype NoteProperty
+				$row  | Add-Member -Name Name -Value $Name[$i] -Membertype NoteProperty
+				$row  | Add-Member -Name ID -Value $ID[$i] -Membertype NoteProperty
+				$row  | Add-Member -Name Description -Value $Description[$i] -Membertype NoteProperty
+				$row  | Add-Member -Name canCreateStores -Value $canCreateStores[$i] -Membertype NoteProperty
+				$row  | Add-Member -Name canSetServerProperties -Value $canSetServerProperties[$i] -Membertype NoteProperty
+				$row  | Add-Member -Name canManageClientPermissions -Value $canManageClientPermissions[$i] -Membertype NoteProperty
+				$SOCatClients += $row
+			
+		
+				}
+			}
+	
+		} 
+		
+	Return $SOCatClients
 	
 	}# end function
