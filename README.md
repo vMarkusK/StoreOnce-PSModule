@@ -29,26 +29,34 @@ This should be the first Commandlet you use from this module.
 
 * Get-SOSIDs
 
-Lists all ServiceSets from your your StoreOnce system(s).
+Lists all ServiceSets from your StoreOnce system(s).
 
 Outputs: ArrayIP,SSID,Name,Alias,OverallHealth,SerialNumber,Capacity(GB).Free(GB),UserData(GB),DiskData(GB)
 
 * Get-SOCatStores
 
-Lists all Catalyst Stores from your your StoreOnce system(s).
+Lists all Catalyst Stores from your StoreOnce system(s).
 
 Outputs: ArrayIP,SSID,Name,SizeOnDisk(GB),UserDataStored(GB),DedupeRatio
 
 * Get-SONasShares
 
-Lists all NAS Stores from your your StoreOnce system(s).
+Lists all NAS Stores from your StoreOnce system(s).
 
 Outputs: ArrayIP,SSID,Name,AccessProtocol,SizeOnDisk(GB),UserDataStored(GB),DedupeRatio
 
+* Get-SOCatClients
+
+Lists all Catalyst Clients from your StoreOnce system(s).
+
+Outputs: ArrayIP,SSID,Name,ID,Description,canCreateStores,canSetServerProperties,canManageClientPermissions
 
 <a name="Enhancements">
 # Enhancements
 [*Back to top*](#Title)
+
+Version 0.4
++ Get StoreOnce Catalyst Clients (User)
 
 Version 0.3
 + Get StoreOnce NAS Shares
