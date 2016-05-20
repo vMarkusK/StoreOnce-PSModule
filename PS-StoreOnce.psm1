@@ -106,7 +106,7 @@ function Get-SOSIDs {
 
  .Description
 	Lists all Catalyst Stores from your StoreOnce system(s).
-	Outputs: ArrayIP,SSID,Name,SizeOnDisk(GB),UserDataStored(GB),DedupeRatio
+	Outputs: ArrayIP,SSID,Name,ID,SizeOnDisk(GB),UserDataStored(GB),DedupeRatio
 	
  .Parameter D2DIPs
   IP Address of your StoreOnce system(s).
@@ -144,9 +144,10 @@ function Get-SOCatStores {
 					} 
 				} 
 			$StoreInfResponse = Invoke-RestMethod @StoreInf
-		
-			[Array] $Name = $StoreInfResponse.document.stores.store.properties.name
+			
 			[Array] $SSID = $StoreInfResponse.document.stores.store.properties.ssid
+			[Array] $Name = $StoreInfResponse.document.stores.store.properties.name
+			[Array] $ID = $StoreInfResponse.document.stores.store.properties.id
 			[Array] $UserDataStored = $StoreInfResponse.document.stores.store.properties.userdatastored
 			[Array] $SizeOnDisk = $StoreInfResponse.document.stores.store.properties.sizeondisk
 			[Array] $DDRate = $StoreInfResponse.document.stores.store.properties.deduperatio
@@ -160,6 +161,7 @@ function Get-SOCatStores {
 				$row  | Add-Member -Name ArrayIP -Value $D2DIP -Membertype NoteProperty
 				$row  | Add-Member -Name SSID -Value $SSID[$i] -Membertype NoteProperty
 				$row  | Add-Member -Name Name -Value $Name[$i] -Membertype NoteProperty
+				$row  | Add-Member -Name ID -Value $ID[$i] -Membertype NoteProperty
 				$row  | Add-Member -Name "SizeOnDisk(GB)" -Value ([math]::Round(($SizeOnDisk[$i]),2)) -Membertype NoteProperty
 				$row  | Add-Member -Name "UserDataStored(GB)" -Value ([math]::Round(($UserDataStored[$i]),2)) -Membertype NoteProperty
 				$row  | Add-Member -Name DedupeRatio -Value $DDRate[$i] -Membertype NoteProperty
@@ -181,7 +183,7 @@ function Get-SOCatStores {
 
  .Description
 	Lists all NAS Stores from your StoreOnce system(s).
-	Outputs: ArrayIP,SSID,Name,AccessProtocol,SizeOnDisk(GB),UserDataStored(GB),DedupeRatio
+	Outputs: ArrayIP,SSID,Name,ID,AccessProtocol,SizeOnDisk(GB),UserDataStored(GB),DedupeRatio
 	
  .Parameter D2DIPs
   IP Address of your StoreOnce system(s).
@@ -221,6 +223,7 @@ function Get-SONasShares {
 			$ShareInfResponse = Invoke-RestMethod @ShareInf
 		
 			[Array] $Name = $ShareInfResponse.document.shares.share.properties.name
+			[Array] $ID = $ShareInfResponse.document.shares.share.properties.id
 			[Array] $AccessProtocol = $ShareInfResponse.document.shares.share.properties.accessProtocol
 			[Array] $SSID = $ShareInfResponse.document.shares.share.properties.ssid
 			[Array] $UserDataStored = $ShareInfResponse.document.shares.share.properties.userdatastored
@@ -234,6 +237,7 @@ function Get-SONasShares {
 				$row  | Add-Member -Name ArrayIP -Value $D2DIP -Membertype NoteProperty
 				$row  | Add-Member -Name SSID -Value $SSID[$i] -Membertype NoteProperty
 				$row  | Add-Member -Name Name -Value $Name[$i] -Membertype NoteProperty
+				$row  | Add-Member -Name ID -Value $ID[$i] -Membertype NoteProperty
 				$row  | Add-Member -Name AccessProtocol -Value $AccessProtocol[$i] -Membertype NoteProperty
 				$row  | Add-Member -Name "SizeOnDisk(GB)" -Value ([math]::Round(($SizeOnDisk[$i]),2)) -Membertype NoteProperty
 				$row  | Add-Member -Name "UserDataStored(GB)" -Value ([math]::Round(($UserDataStored[$i]),2)) -Membertype NoteProperty
