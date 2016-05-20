@@ -330,3 +330,63 @@ function Get-SOCatClients {
 	Return $SOCatClients
 	
 	}# end function
+	
+<# 
+ .Synopsis
+	Lists Client Access Permissions of a Catalyst Store.
+
+ .Description
+	Lists Client Access Permissions of a Catalyst Store.
+	Outputs: Client,allowAccess
+	
+ .Parameter D2DIP
+  IP Address of your StoreOnce system.
+  
+ .Parameter CatStore
+  Name of your StoreOnce Store.
+
+ .Example
+   Get-SOCatStoreAccess -D2DIP 192.168.2.1 -CatStore YourStore
+
+#>
+function Get-SOCatStoreAccess {
+	param (
+	[parameter(Mandatory=$true)]
+	$D2DIP,
+	[parameter(Mandatory=$true)]
+	$CatStore
+	)
+	
+	if ($SOCred -eq $null) {Write-Error "No System Credential Set! Use 'Set-SOCredentials'."; return}
+	$SOCatStoreAccess =  New-Object System.Collections.ArrayList
+	
+	$myCatStore = Get-SOCatStores -D2DIPs $D2DIP | Where {$_.Name -eq $CatStore}
+	if ($myCatStore -eq $null) {Write-Error "No Store named $CatStore found."; return}
+	$mySSID = ($myCatStore).SSID
+	$myID = ($myCatStore).ID
+	
+	$StoreAcc = @{uri = "https://$D2DIP/storeonceservices/cluster/servicesets/$mySSID/services/cat/stores/$myID/permissions";
+				Method = 'GET'; #(or POST, or whatever)
+				Headers = @{Authorization = 'Basic ' + $SOCred;
+							Accept = 'text/xml'
+				} 
+			} 
+	$StoreAccResponse = Invoke-RestMethod @StoreAcc
+			
+	[Array] $Name = $StoreAccResponse.document.permittedClients.permittedClient.properties.name
+	[Array] $allowAccess = $StoreAccResponse.document.permittedClients.permittedClient.properties.allowAccess
+	
+	$ClientCount = ($Name).count
+			
+	for ($i = 0; $i -lt $ClientCount; $i++ ){
+						
+		$row = New-object PSObject
+		$row  | Add-Member -Name Client -Value $Name[$i] -Membertype NoteProperty
+		$row  | Add-Member -Name allowAccess -Value $allowAccess[$i] -Membertype NoteProperty
+		$SOCatStoreAccess += $row
+			
+		}
+	
+	Return $SOCatStoreAccess | where {$_.allowAccess -eq "true"}
+	
+	}# end function

@@ -51,9 +51,18 @@ Lists all Catalyst Clients from your StoreOnce system(s).
 
 Outputs: ArrayIP,SSID,Name,ID,Description,canCreateStores,canSetServerProperties,canManageClientPermissions
 
+* Get-SOCatStoreAccess
+
+Lists Clients with Access Permissions of a Catalyst Store.
+
+Outputs: Client,allowAccess
+
 <a name="Enhancements">
 # Enhancements
 [*Back to top*](#Title)
+
+Version 0.5
++ Get Clients (Users) with Access Permissions of a Catalyst Store
 
 Version 0.4.1
 + Enhanced: Added ID not NAS and Catalyst
