@@ -20,7 +20,7 @@
 	This should be the first Commandlet you use from this module.
 
  .Parameter TESTIP
-  IP Address of your StoreOnce system to Test the Connection.
+  IP Address of your StoreOnce system to Test the Credentials.
   
  .Example
    Set-SOCredentials

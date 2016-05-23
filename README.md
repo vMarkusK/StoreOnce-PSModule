@@ -62,7 +62,7 @@ Outputs: Client,allowAccess
 [*Back to top*](#Title)
 
 Version 0.5.1
-+ Enhanced: Optional Credential verification for Set-SOCredentials
++ Enhanced: Optional Credential verification for Set-SOCredentials Commandlet
 
 Version 0.5
 + Get Clients (Users) with Access Permissions of a Catalyst Store
