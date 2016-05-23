@@ -16,7 +16,7 @@ HPE StoreOnce PS Module
 
 Project Owner: Markus Kraus
 
-Project WebSite: https://mycloudrevolution.wordpress.com/storeonce-powershell-module
+Project WebSite: http://mycloudrevolution.com/storeonce-powershell-module
 
 <a name="Features">
 # Features
@@ -60,6 +60,9 @@ Outputs: Client,allowAccess
 <a name="Enhancements">
 # Enhancements
 [*Back to top*](#Title)
+
+Version 0.5.1
++ Enhanced: Optional Credential verification for Set-SOCredentials Commandlet
 
 Version 0.5
 + Get Clients (Users) with Access Permissions of a Catalyst Store
