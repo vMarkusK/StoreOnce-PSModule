@@ -16,7 +16,6 @@ HPE StoreOnce PS Module
 
 Project Owner: Markus Kraus
 
-Project WebSite: https://mycloudrevolution.wordpress.com/storeonce-powershell-module
 
 <a name="Features">
 # Features
