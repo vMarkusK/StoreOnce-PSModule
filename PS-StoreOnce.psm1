@@ -18,19 +18,46 @@
  .Description
 	Creates a Base64 hash for further requests against your StoreOnce system(s). 
 	This should be the first Commandlet you use from this module.
+
+ .Parameter TESTIP
+  IP Address of your StoreOnce system to Test the Connection.
   
  .Example
    Set-SOCredentials
+   
+ .Example
+   Set-SOCredentials -TESTIP 192.168.2.1 
 
 #>
 function Set-SOCredentials {
+	param (
+	[parameter(Mandatory=$false)]
+	$TESTIP
+	)
+	
+	if ($TESTIP.count -gt 1) {Write-Error "This Command only Supports one IP (D2D System)." -Category InvalidArgument; return}
 	
 	[String]$SOUser = (Read-Host 'D2D username?')
 	$SOPassword = (Read-Host 'D2D password?' -AsSecureString)
 	[String]$SOPasswordClear =  [Runtime.InteropServices.Marshal]::PtrToStringAuto([Runtime.InteropServices.Marshal]::SecureStringToBSTR($SOPassword))
   	$global:SOCred = [Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes("$($SOUser):$($SOPasswordClear)"))
-	if ($SOCred -eq $null) {Write-Error "No Credential Set"; return}
+	if ($SOCred -eq $null) {Write-Error "No Credential Set" -Category InvalidArgument; return}
 	
+	If ($TESTIP) {
+		$TESTCall = @{uri = "https://$TESTIP/storeonceservices/";
+					Method = 'GET'; #(or POST, or whatever)
+						Headers = @{Authorization = 'Basic ' + $SOCred;
+									Accept = 'text/xml'
+				} 
+			} 
+			
+		$TESTResponse = Invoke-RestMethod @TESTCall
+		$TESTCount = ($TESTResponse.document.list.item).count
+	
+		if ($TESTCount -lt 1) {Write-Error "Wrong Credentials!" -Category ConnectionError; return}
+		else {Write-Host "Credentials OK!" -ForegroundColor Green}
+		}
+		
 	} # end function
 
 <# 
@@ -54,7 +81,7 @@ function Get-SOSIDs {
 	$D2DIPs
 	)
 	
-	if ($SOCred -eq $null) {Write-Error "No Credential Set! Use 'set-SOCredentials'"; return}
+	if ($SOCred -eq $null) {Write-Error "No Credential Set! Use 'set-SOCredentials'" -Category ConnectionError; return}
 	$SOSIDs =  New-Object System.Collections.ArrayList
 	
 	foreach ($D2DIP in $D2DIPs) {
@@ -64,7 +91,7 @@ function Get-SOSIDs {
 									Accept = 'text/xml'
 				} 
 			} 
-		
+			
 		$SIDsResponse = Invoke-RestMethod @SIDCall
 		$SIDCount = ($SIDsResponse.document.servicesets.serviceset).count
 		if ($SIDCount -eq $null) {$SIDCount = 1}
@@ -78,8 +105,7 @@ function Get-SOSIDs {
 		[Array] $UserBytes = $SIDsResponse.document.servicesets.serviceset.properties.userBytes
 		[Array] $DiskBytes = $SIDsResponse.document.servicesets.serviceset.properties.diskBytes
 		
-		for ($i = 0; $i -lt $SIDCount; $i++ ){
-				
+		for ($i = 0; $i -lt $SIDCount; $i++ ){		
 			$row = New-object PSObject
 			$row  | Add-Member -Name ArrayIP -Value $D2DIP -Membertype NoteProperty
 			$row  | Add-Member -Name SSID -Value $SSID[$i]-Membertype NoteProperty
@@ -92,7 +118,6 @@ function Get-SOSIDs {
 			$row  | Add-Member -Name "UserData(GB)" -Value ([math]::Round(($UserBytes[$i] / 1073741824),2))  -Membertype NoteProperty
 			$row  | Add-Member -Name "DiskData(GB)" -Value ([math]::Round(($DiskBytes[$i] / 1073741824),2))  -Membertype NoteProperty
 			$SOSIDs += $row
-			
 			} 
 		}
 	
@@ -121,7 +146,7 @@ function Get-SOCatStores {
 	$D2DIPs
 	)
 	
-	if ($SOCred -eq $null) {Write-Error "No System Credential Set! Use 'Set-SOCredentials'."; return}
+	if ($SOCred -eq $null) {Write-Error "No System Credential Set! Use 'Set-SOCredentials'." -Category ConnectionError; return}
 	$SOCatStores =  New-Object System.Collections.ArrayList
 	
 	foreach ($D2DIP in $D2DIPs) {
@@ -143,8 +168,8 @@ function Get-SOCatStores {
 										Accept = 'text/xml'
 					} 
 				} 
-			$StoreInfResponse = Invoke-RestMethod @StoreInf
 			
+			$StoreInfResponse = Invoke-RestMethod @StoreInf
 			[Array] $SSID = $StoreInfResponse.document.stores.store.properties.ssid
 			[Array] $Name = $StoreInfResponse.document.stores.store.properties.name
 			[Array] $ID = $StoreInfResponse.document.stores.store.properties.id
@@ -155,8 +180,7 @@ function Get-SOCatStores {
 		
 			$DDRate = $DDRate | foreach {$i=1} {if ($i++ %2){$_}}
 		
-			for ($i = 0; $i -lt $StoresCount; $i++ ){
-						
+			for ($i = 0; $i -lt $StoresCount; $i++ ){	
 				$row = New-object PSObject
 				$row  | Add-Member -Name ArrayIP -Value $D2DIP -Membertype NoteProperty
 				$row  | Add-Member -Name SSID -Value $SSID[$i] -Membertype NoteProperty
@@ -166,11 +190,8 @@ function Get-SOCatStores {
 				$row  | Add-Member -Name "UserDataStored(GB)" -Value ([math]::Round(($UserDataStored[$i]),2)) -Membertype NoteProperty
 				$row  | Add-Member -Name DedupeRatio -Value $DDRate[$i] -Membertype NoteProperty
 				$SOCatStores += $row
-			
-		
 				}
 			}
-	
 		} 
 		
 	Return $SOCatStores
@@ -198,7 +219,7 @@ function Get-SONasShares {
 	$D2DIPs
 	)
 	
-	if ($SOCred -eq $null) {Write-Error "No System Credential Set! Use 'Set-SOCredentials'."; return}
+	if ($SOCred -eq $null) {Write-Error "No System Credential Set! Use 'Set-SOCredentials'." -Category ConnectionError; return}
 	$SONasShares =  New-Object System.Collections.ArrayList
 	
 	foreach ($D2DIP in $D2DIPs) {
@@ -220,8 +241,8 @@ function Get-SONasShares {
 										Accept = 'text/xml'
 					} 
 				} 
+			
 			$ShareInfResponse = Invoke-RestMethod @ShareInf
-		
 			[Array] $Name = $ShareInfResponse.document.shares.share.properties.name
 			[Array] $ID = $ShareInfResponse.document.shares.share.properties.id
 			[Array] $AccessProtocol = $ShareInfResponse.document.shares.share.properties.accessProtocol
@@ -231,8 +252,7 @@ function Get-SONasShares {
 			[Array] $DDRate = $ShareInfResponse.document.shares.share.properties.deduperatio
 			$ShareCount = ($Name).count
 		
-			for ($i = 0; $i -lt $ShareCount; $i++ ){
-						
+			for ($i = 0; $i -lt $ShareCount; $i++ ){		
 				$row = New-object PSObject
 				$row  | Add-Member -Name ArrayIP -Value $D2DIP -Membertype NoteProperty
 				$row  | Add-Member -Name SSID -Value $SSID[$i] -Membertype NoteProperty
@@ -243,11 +263,8 @@ function Get-SONasShares {
 				$row  | Add-Member -Name "UserDataStored(GB)" -Value ([math]::Round(($UserDataStored[$i]),2)) -Membertype NoteProperty
 				$row  | Add-Member -Name DedupeRatio -Value $DDRate[$i] -Membertype NoteProperty
 				$SONasShares += $row
-			
-		
 				}
 			}
-	
 		} 
 		
 	Return $SONasShares
@@ -333,10 +350,10 @@ function Get-SOCatClients {
 	
 <# 
  .Synopsis
-	Lists Client Access Permissions of a Catalyst Store.
+	Lists Clients with Access Permissions of a Catalyst Store..
 
  .Description
-	Lists Client Access Permissions of a Catalyst Store.
+	Lists Clients with Access Permissions of a Catalyst Store..
 	Outputs: Client,allowAccess
 	
  .Parameter D2DIP
@@ -357,7 +374,8 @@ function Get-SOCatStoreAccess {
 	$CatStore
 	)
 	
-	if ($SOCred -eq $null) {Write-Error "No System Credential Set! Use 'Set-SOCredentials'."; return}
+	if ($SOCred -eq $null) {Write-Error "No System Credential Set! Use 'Set-SOCredentials'." -Category ConnectionError; return}
+	if ($D2DIP.count -gt 1) {Write-Error "This Command only Supports one IP (D2D System)." -Category InvalidArgument; return}
 	$SOCatStoreAccess =  New-Object System.Collections.ArrayList
 	
 	$myCatStore = Get-SOCatStores -D2DIPs $D2DIP | Where {$_.Name -eq $CatStore}
@@ -371,20 +389,17 @@ function Get-SOCatStoreAccess {
 							Accept = 'text/xml'
 				} 
 			} 
-	$StoreAccResponse = Invoke-RestMethod @StoreAcc
 			
+	$StoreAccResponse = Invoke-RestMethod @StoreAcc	
 	[Array] $Name = $StoreAccResponse.document.permittedClients.permittedClient.properties.name
 	[Array] $allowAccess = $StoreAccResponse.document.permittedClients.permittedClient.properties.allowAccess
-	
 	$ClientCount = ($Name).count
 			
-	for ($i = 0; $i -lt $ClientCount; $i++ ){
-						
+	for ($i = 0; $i -lt $ClientCount; $i++ ){				
 		$row = New-object PSObject
 		$row  | Add-Member -Name Client -Value $Name[$i] -Membertype NoteProperty
 		$row  | Add-Member -Name allowAccess -Value $allowAccess[$i] -Membertype NoteProperty
 		$SOCatStoreAccess += $row
-			
 		}
 	
 	Return $SOCatStoreAccess | where {$_.allowAccess -eq "true"}
