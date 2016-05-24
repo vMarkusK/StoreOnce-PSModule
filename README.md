@@ -1,7 +1,7 @@
 <a name="Title">
 # Title
 
-HPE StoreOnce PS Module
+HPE StoreOnce PowerShell Module
 
 |Navigation|
 |-----------------|
@@ -17,6 +17,17 @@ HPE StoreOnce PS Module
 Project Owner: Markus Kraus
 
 Project WebSite: http://mycloudrevolution.com/storeonce-powershell-module
+
+Project Details:
+
+This module leverages the HPE StoreOnce REST API with PowerShell.
+This first cmdlets will be for reporting purposes and after that some basic administrative cmdlets should be added.
+
++ Create Stores
++ Change Permissions
++ Delete Stores
++ etc.
+
 
 <a name="Features">
 # Features
