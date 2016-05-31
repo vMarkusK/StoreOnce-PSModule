@@ -30,7 +30,7 @@
 
 #>
 function Set-SOCredentials {
-	[CmdletBinding()]
+	[CmdletBinding(SupportsShouldProcess = $True, ConfirmImpact = 'Low')]
 	param (
 	[parameter(Mandatory=$false)]
 	$TESTIP
@@ -56,7 +56,7 @@ function Set-SOCredentials {
 		$TESTCount = ($TESTResponse.document.list.item).count
 	
 		if ($TESTCount -lt 1) {Write-Error "Wrong Credentials!" -Category ConnectionError; return}
-		else {Write-Host "Credentials OK!" -ForegroundColor Green}
+		else {Write-Information "Credentials OK!"}
 		}
 	}	
 	} # end function
@@ -86,7 +86,7 @@ function Get-SOSIDs {
 	if ($SOCred -eq $null) {Write-Error "No Credential Set! Use 'set-SOCredentials'" -Category ConnectionError; return}
 	$SOSIDs =  New-Object System.Collections.ArrayList
 	
-	foreach ($D2DIP in $D2DIPs) {
+	ForEach ($D2DIP in $D2DIPs) {
 		$SIDCall = @{uri = "https://$D2DIP/storeonceservices/cluster/servicesets/";
 					Method = 'GET'; #(or POST, or whatever)
 						Headers = @{Authorization = 'Basic ' + $SOCred;
@@ -152,7 +152,7 @@ function Get-SOCatStores {
 	if ($SOCred -eq $null) {Write-Error "No System Credential Set! Use 'Set-SOCredentials'." -Category ConnectionError; return}
 	$SOCatStores =  New-Object System.Collections.ArrayList
 	
-	foreach ($D2DIP in $D2DIPs) {
+	ForEach ($D2DIP in $D2DIPs) {
 		$SIDCall = @{uri = "https://$D2DIP/storeonceservices/cluster/servicesets/";
 					Method = 'GET'; #(or POST, or whatever)
 						Headers = @{Authorization = 'Basic ' + $SOCred;
@@ -181,7 +181,7 @@ function Get-SOCatStores {
 			[Array] $DDRate = $StoreInfResponse.document.stores.store.properties.deduperatio
 			$StoresCount = ($Name).count
 		
-			$DDRate = $DDRate | foreach {$i=1} {if ($i++ %2){$_}}
+			$DDRate = $DDRate | ForEach {$i=1} {if ($i++ %2){$_}}
 		
 			for ($i = 0; $i -lt $StoresCount; $i++ ){	
 				$row = New-object PSObject
@@ -226,7 +226,7 @@ function Get-SONasShares {
 	if ($SOCred -eq $null) {Write-Error "No System Credential Set! Use 'Set-SOCredentials'." -Category ConnectionError; return}
 	$SONasShares =  New-Object System.Collections.ArrayList
 	
-	foreach ($D2DIP in $D2DIPs) {
+	ForEach ($D2DIP in $D2DIPs) {
 		$SIDCall = @{uri = "https://$D2DIP/storeonceservices/cluster/servicesets/";
 					Method = 'GET'; #(or POST, or whatever)
 						Headers = @{Authorization = 'Basic ' + $SOCred;
@@ -300,7 +300,7 @@ function Get-SOCatClients {
 	if ($SOCred -eq $null) {Write-Error "No System Credential Set! Use 'Set-SOCredentials'."; return}
 	$SOCatClients =  New-Object System.Collections.ArrayList
 	
-	foreach ($D2DIP in $D2DIPs) {
+	ForEach ($D2DIP in $D2DIPs) {
 		$SIDCall = @{uri = "https://$D2DIP/storeonceservices/cluster/servicesets/";
 					Method = 'GET'; #(or POST, or whatever)
 						Headers = @{Authorization = 'Basic ' + $SOCred;
@@ -408,6 +408,6 @@ function Get-SOCatStoreAccess {
 		$SOCatStoreAccess += $row
 		}
 	
-	Return $SOCatStoreAccess | where {$_.allowAccess -eq "true"}
+	Return $SOCatStoreAccess | Where {$_.allowAccess -eq "true"}
 	}
 	}# end function
