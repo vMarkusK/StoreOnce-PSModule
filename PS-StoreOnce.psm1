@@ -35,7 +35,7 @@ function Set-SOCredentials {
 	[parameter(Mandatory=$false)]
 	$TESTIP
 	)
-	
+	Process {
 	if ($TESTIP.count -gt 1) {Write-Error "This Command only Supports one IP (D2D System)." -Category InvalidArgument; return}
 	
 	[String]$SOUser = (Read-Host 'D2D username?')
@@ -58,7 +58,7 @@ function Set-SOCredentials {
 		if ($TESTCount -lt 1) {Write-Error "Wrong Credentials!" -Category ConnectionError; return}
 		else {Write-Host "Credentials OK!" -ForegroundColor Green}
 		}
-		
+	}	
 	} # end function
 
 <# 
@@ -82,7 +82,7 @@ function Get-SOSIDs {
 	[parameter(Mandatory=$true)]
 	$D2DIPs
 	)
-	
+	Process {
 	if ($SOCred -eq $null) {Write-Error "No Credential Set! Use 'set-SOCredentials'" -Category ConnectionError; return}
 	$SOSIDs =  New-Object System.Collections.ArrayList
 	
@@ -124,7 +124,7 @@ function Get-SOSIDs {
 		}
 	
 	Return $SOSIDs
-	
+	}
 	} # end function
 
 <# 
@@ -148,7 +148,7 @@ function Get-SOCatStores {
 	[parameter(Mandatory=$true)]
 	$D2DIPs
 	)
-	
+	Process {
 	if ($SOCred -eq $null) {Write-Error "No System Credential Set! Use 'Set-SOCredentials'." -Category ConnectionError; return}
 	$SOCatStores =  New-Object System.Collections.ArrayList
 	
@@ -198,7 +198,7 @@ function Get-SOCatStores {
 		} 
 		
 	Return $SOCatStores
-	
+	}
 	}# end function
 
 <# 
@@ -222,7 +222,7 @@ function Get-SONasShares {
 	[parameter(Mandatory=$true)]
 	$D2DIPs
 	)
-	
+	Process {
 	if ($SOCred -eq $null) {Write-Error "No System Credential Set! Use 'Set-SOCredentials'." -Category ConnectionError; return}
 	$SONasShares =  New-Object System.Collections.ArrayList
 	
@@ -272,7 +272,7 @@ function Get-SONasShares {
 		} 
 		
 	Return $SONasShares
-	
+	}
 	}# end function
 
 <# 
@@ -296,7 +296,7 @@ function Get-SOCatClients {
 	[parameter(Mandatory=$true)]
 	$D2DIPs
 	)
-	
+	Process {
 	if ($SOCred -eq $null) {Write-Error "No System Credential Set! Use 'Set-SOCredentials'."; return}
 	$SOCatClients =  New-Object System.Collections.ArrayList
 	
@@ -350,7 +350,7 @@ function Get-SOCatClients {
 		} 
 		
 	Return $SOCatClients
-	
+	}
 	}# end function
 	
 <# 
@@ -379,7 +379,7 @@ function Get-SOCatStoreAccess {
 	[parameter(Mandatory=$true)]
 	$CatStore
 	)
-	
+	Process {
 	if ($SOCred -eq $null) {Write-Error "No System Credential Set! Use 'Set-SOCredentials'." -Category ConnectionError; return}
 	if ($D2DIP.count -gt 1) {Write-Error "This Command only Supports one IP (D2D System)." -Category InvalidArgument; return}
 	$SOCatStoreAccess =  New-Object System.Collections.ArrayList
@@ -409,5 +409,5 @@ function Get-SOCatStoreAccess {
 		}
 	
 	Return $SOCatStoreAccess | where {$_.allowAccess -eq "true"}
-	
+	}
 	}# end function
