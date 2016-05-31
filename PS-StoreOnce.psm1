@@ -30,6 +30,7 @@
 
 #>
 function Set-SOCredentials {
+	[CmdletBinding()]
 	param (
 	[parameter(Mandatory=$false)]
 	$TESTIP
@@ -76,6 +77,7 @@ function Set-SOCredentials {
 
 #>
 function Get-SOSIDs {
+	[CmdletBinding()]
 	param (
 	[parameter(Mandatory=$true)]
 	$D2DIPs
@@ -141,6 +143,7 @@ function Get-SOSIDs {
 
 #>
 function Get-SOCatStores {
+	[CmdletBinding()]
 	param (
 	[parameter(Mandatory=$true)]
 	$D2DIPs
@@ -214,6 +217,7 @@ function Get-SOCatStores {
 
 #>
 function Get-SONasShares {
+	[CmdletBinding()]
 	param (
 	[parameter(Mandatory=$true)]
 	$D2DIPs
@@ -287,6 +291,7 @@ function Get-SONasShares {
 
 #>
 function Get-SOCatClients {
+	[CmdletBinding()]
 	param (
 	[parameter(Mandatory=$true)]
 	$D2DIPs
@@ -367,6 +372,7 @@ function Get-SOCatClients {
 
 #>
 function Get-SOCatStoreAccess {
+	[CmdletBinding()]
 	param (
 	[parameter(Mandatory=$true)]
 	$D2DIP,
