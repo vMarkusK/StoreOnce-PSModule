@@ -1,0 +1,14 @@
+PSTOPIC
+    about_PS-StoreOnce
+
+SHORT DESCRIPTION
+    PS-StoreOnce allows you to work with the HPE StoreOnce API through PowerShell functions
+
+LONG DESCRIPTION
+    PS-StoreOnce allows you to work with the HPE StoreOnce API through PowerShell functions
+
+    You can find API documentation here:
+        
+
+DETAILED DESCRIPTION
+    This is a rudimentary module that allows querying for some basic HPE StoreOnce API objects.
