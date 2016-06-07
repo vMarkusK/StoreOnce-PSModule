@@ -74,10 +74,7 @@ function Set-SOCredentials {
 	Process {
 	if ($TESTIP.count -gt 1) {Write-Error "This Command only Supports one IP (D2D System)." -Category InvalidArgument; Return}
 	
-	#[String]$SOUser = (Read-Host 'D2D username?')
-	#$SOPassword = (Read-Host 'D2D password?' -AsSecureString)
 	[String]$SOPasswordClear =  [Runtime.InteropServices.Marshal]::PtrToStringAuto([Runtime.InteropServices.Marshal]::SecureStringToBSTR($SOPassword))
-	# [String]$SOPasswordClear = ConvertFrom-SecureString $SOPassword
   	$global:SOCred = [Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes("$($SOUser):$($SOPasswordClear)"))
 	if ($SOCred -eq $null) {Write-Error "No Credential Set" -Category InvalidArgument; Return}
 	

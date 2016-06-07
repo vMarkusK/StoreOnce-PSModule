@@ -72,6 +72,10 @@ Outputs: Client,allowAccess
 # Enhancements
 [*Back to top*](#Title)
 
+Version 0.5.2
++ Enhanced: New Cert Handling 
++ Enhanced: Cmdlet Set-SOCredentials rewritten
+
 Version 0.5.1
 + Enhanced: Optional Credential verification for Set-SOCredentials Commandlet
 
