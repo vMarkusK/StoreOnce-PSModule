@@ -1,15 +1,30 @@
-﻿add-type @"
-    using System.Net;
-    using System.Security.Cryptography.X509Certificates;
-    public class TrustAllCertsPolicy : ICertificatePolicy {
-        public bool CheckValidationResult(
-            ServicePoint srvPoint, X509Certificate certificate,
-            WebRequest request, int certificateProblem) {
-            return true;
+﻿function Ignore-SelfSignedCerts
+{
+    try
+    {
+        Add-Type -TypeDefinition  @"
+        using System.Net;
+        using System.Security.Cryptography.X509Certificates;
+        public class TrustAllCertsPolicy : ICertificatePolicy
+        {
+             public bool CheckValidationResult(
+             ServicePoint srvPoint, X509Certificate certificate,
+             WebRequest request, int certificateProblem)
+             {
+                 return true;
+            }
         }
-    }
 "@
-[System.Net.ServicePointManager]::CertificatePolicy = New-Object TrustAllCertsPolicy
+      }
+    catch
+    {
+        Write-Error $_
+    }
+
+    [System.Net.ServicePointManager]::CertificatePolicy = New-Object TrustAllCertsPolicy
+}
+
+Ignore-SelfSignedCerts
 
 <# 
  .Synopsis
@@ -18,31 +33,53 @@
  .Description
 	Creates a Base64 hash for further requests against your StoreOnce system(s). 
 	This should be the first Commandlet you use from this module.
+	
+ .Parameter SOPassword
+  User Password as SecureString of your StoreOnce system.
+
+ .Parameter SOUser
+  User Name of your StoreOnce system.
 
  .Parameter TESTIP
   IP Address of your StoreOnce system to Test the Credentials.
+  
+ .Parameter ShowHash
+  It set to True, Hash will be displayed.
   
  .Example
    Set-SOCredentials
    
  .Example
-   Set-SOCredentials -TESTIP 192.168.2.1 
+   Set-SOCredentials -TESTIP 192.168.2.1 -ShowHash $true
+   
+ .Example  
+   Set-SOCredentials -SOUser Admin -SOPassword $("admin" | ConvertTo-SecureString -AsPlainText -Force) -ShowHash $true
+   
+ .Example  
+   Set-SOCredentials -SOUser Admin -ShowHash $true
 
 #>
 function Set-SOCredentials {
 	[CmdletBinding(SupportsShouldProcess = $True, ConfirmImpact = 'Low')]
 	param (
+	[parameter(Mandatory=$true)]
+	[SecureString]$SOPassword,
+	[parameter(Mandatory=$true)]
+	[String]$SOUser,
 	[parameter(Mandatory=$false)]
-	$TESTIP
+	[String]$TESTIP,
+	[parameter(Mandatory=$false)]
+	[Boolean]$ShowHash
 	)
 	Process {
-	if ($TESTIP.count -gt 1) {Write-Error "This Command only Supports one IP (D2D System)." -Category InvalidArgument; return}
+	if ($TESTIP.count -gt 1) {Write-Error "This Command only Supports one IP (D2D System)." -Category InvalidArgument; Return}
 	
-	[String]$SOUser = (Read-Host 'D2D username?')
-	$SOPassword = (Read-Host 'D2D password?' -AsSecureString)
+	#[String]$SOUser = (Read-Host 'D2D username?')
+	#$SOPassword = (Read-Host 'D2D password?' -AsSecureString)
 	[String]$SOPasswordClear =  [Runtime.InteropServices.Marshal]::PtrToStringAuto([Runtime.InteropServices.Marshal]::SecureStringToBSTR($SOPassword))
+	# [String]$SOPasswordClear = ConvertFrom-SecureString $SOPassword
   	$global:SOCred = [Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes("$($SOUser):$($SOPasswordClear)"))
-	if ($SOCred -eq $null) {Write-Error "No Credential Set" -Category InvalidArgument; return}
+	if ($SOCred -eq $null) {Write-Error "No Credential Set" -Category InvalidArgument; Return}
 	
 	If ($TESTIP) {
 		$TESTCall = @{uri = "https://$TESTIP/storeonceservices/";
@@ -55,9 +92,10 @@ function Set-SOCredentials {
 		$TESTResponse = Invoke-RestMethod @TESTCall
 		$TESTCount = ($TESTResponse.document.list.item).count
 	
-		if ($TESTCount -lt 1) {Write-Error "Wrong Credentials!" -Category ConnectionError; return}
+		if ($TESTCount -lt 1) {Write-Error "Wrong Credentials!" -Category ConnectionError; Return}
 		else {Write-Information "Credentials OK!"}
 		}
+	if ($ShowHash -eq $true) {Return $SOCred}
 	}	
 	} # end function
 
@@ -83,7 +121,7 @@ function Get-SOSIDs {
 	$D2DIPs
 	)
 	Process {
-	if ($SOCred -eq $null) {Write-Error "No Credential Set! Use 'set-SOCredentials'" -Category ConnectionError; return}
+	if ($SOCred -eq $null) {Write-Error "No Credential Set! Use 'set-SOCredentials'" -Category ConnectionError; Return}
 	$SOSIDs =  New-Object System.Collections.ArrayList
 	
 	ForEach ($D2DIP in $D2DIPs) {
@@ -149,7 +187,7 @@ function Get-SOCatStores {
 	$D2DIPs
 	)
 	Process {
-	if ($SOCred -eq $null) {Write-Error "No System Credential Set! Use 'Set-SOCredentials'." -Category ConnectionError; return}
+	if ($SOCred -eq $null) {Write-Error "No System Credential Set! Use 'Set-SOCredentials'." -Category ConnectionError; Return}
 	$SOCatStores =  New-Object System.Collections.ArrayList
 	
 	ForEach ($D2DIP in $D2DIPs) {
@@ -223,7 +261,7 @@ function Get-SONasShares {
 	$D2DIPs
 	)
 	Process {
-	if ($SOCred -eq $null) {Write-Error "No System Credential Set! Use 'Set-SOCredentials'." -Category ConnectionError; return}
+	if ($SOCred -eq $null) {Write-Error "No System Credential Set! Use 'Set-SOCredentials'." -Category ConnectionError; Return}
 	$SONasShares =  New-Object System.Collections.ArrayList
 	
 	ForEach ($D2DIP in $D2DIPs) {
@@ -297,7 +335,7 @@ function Get-SOCatClients {
 	$D2DIPs
 	)
 	Process {
-	if ($SOCred -eq $null) {Write-Error "No System Credential Set! Use 'Set-SOCredentials'."; return}
+	if ($SOCred -eq $null) {Write-Error "No System Credential Set! Use 'Set-SOCredentials'."; Return}
 	$SOCatClients =  New-Object System.Collections.ArrayList
 	
 	ForEach ($D2DIP in $D2DIPs) {
@@ -380,12 +418,12 @@ function Get-SOCatStoreAccess {
 	$CatStore
 	)
 	Process {
-	if ($SOCred -eq $null) {Write-Error "No System Credential Set! Use 'Set-SOCredentials'." -Category ConnectionError; return}
-	if ($D2DIP.count -gt 1) {Write-Error "This Command only Supports one IP (D2D System)." -Category InvalidArgument; return}
+	if ($SOCred -eq $null) {Write-Error "No System Credential Set! Use 'Set-SOCredentials'." -Category ConnectionError; Return}
+	if ($D2DIP.count -gt 1) {Write-Error "This Command only Supports one IP (D2D System)." -Category InvalidArgument; Return}
 	$SOCatStoreAccess =  New-Object System.Collections.ArrayList
 	
 	$myCatStore = Get-SOCatStores -D2DIPs $D2DIP | Where {$_.Name -eq $CatStore}
-	if ($myCatStore -eq $null) {Write-Error "No Store named $CatStore found."; return}
+	if ($myCatStore -eq $null) {Write-Error "No Store named $CatStore found."; Return}
 	$mySSID = ($myCatStore).SSID
 	$myID = ($myCatStore).ID
 	
