@@ -6,6 +6,7 @@ HPE StoreOnce PowerShell Module
 |Navigation|
 |-----------------|
 |[About](#About)|
+|[Contribute](#Contribute)|
 |[Features](#Features)|
 |[Enhancements](#Enhancements)|
 
@@ -28,6 +29,14 @@ This first cmdlets will be for reporting purposes and after that some basic admi
 + Delete Stores
 + etc.
 
+<a name="Contribute">
+# Contribute
+[*Back to top*](#Title)
+
+* Request access to the project Slack Channel (https://mycloudrevolution.slack.com/messages/storeonce-ps/)
+
+Request form: http://mycloudrevolution.com/projekte/storeonce-powershell-module/
+Or contact me via any other channel...
 
 <a name="Features">
 # Features
