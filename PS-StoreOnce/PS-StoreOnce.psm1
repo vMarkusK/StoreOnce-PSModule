@@ -66,6 +66,7 @@ function Set-SOCredentials {
 		if ($PSCmdlet.ShouldProcess( $SOUser,"Creating Base64String String with given Password.")) {
 			[String]$SOPasswordClear =  [Runtime.InteropServices.Marshal]::PtrToStringAuto([Runtime.InteropServices.Marshal]::SecureStringToBSTR($SOPassword))
 			$global:SOCred = [Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes("$($SOUser):$($SOPasswordClear)"))
+			if ($ShowHash -eq $true) {Return $SOCred}
 			}
 		if ($SOCred -eq $null) {Write-Error "No Credential Set" -Category InvalidArgument; Return}
 		
@@ -83,7 +84,7 @@ function Set-SOCredentials {
 			if ($TESTCount -lt 1) {Write-Error "Wrong Credentials!" -Category ConnectionError; Return}
 			else {Write-Information "Credentials OK!"}
 		}
-	if ($ShowHash -eq $true) {Return $SOCred}
+	
 	}	
 }
 #endregion
