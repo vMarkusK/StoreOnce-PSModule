@@ -42,36 +42,36 @@ Or contact me via any other channel...
 # Features
 [*Back to top*](#Title)
 
-* Set-SOCredentials
+## Set-SOCredentials
 
 Creates a Base64 hash for further requests against your StoreOnce system(s).
 This should be the first Commandlet you use from this module.
 
-* Get-SOSIDs
+## Get-SOSIDs
 
 Lists all ServiceSets from your StoreOnce system(s).
 
 Outputs: ArrayIP,SSID,Name,Alias,OverallHealth,SerialNumber,Capacity(GB).Free(GB),UserData(GB),DiskData(GB)
 
-* Get-SOCatStores
+## Get-SOCatStores
 
 Lists all Catalyst Stores from your StoreOnce system(s).
 
 Outputs: ArrayIP,SSID,Name,ID,SizeOnDisk(GB),UserDataStored(GB),DedupeRatio
 
-* Get-SONasShares
+## Get-SONasShares
 
 Lists all NAS Stores from your StoreOnce system(s).
 
 Outputs: ArrayIP,SSID,Name,ID,AccessProtocol,SizeOnDisk(GB),UserDataStored(GB),DedupeRatio
 
-* Get-SOCatClients
+## Get-SOCatClients
 
 Lists all Catalyst Clients from your StoreOnce system(s).
 
 Outputs: ArrayIP,SSID,Name,ID,Description,canCreateStores,canSetServerProperties,canManageClientPermissions
 
-* Get-SOCatStoreAccess
+## Get-SOCatStoreAccess
 
 Lists Clients with Access Permissions of a Catalyst Store.
 
@@ -80,6 +80,10 @@ Outputs: Client,allowAccess
 <a name="Enhancements">
 # Enhancements
 [*Back to top*](#Title)
+
+Version 0.6
++ Enhanced: Parameter Position declaration 
++ Enhanced: Output Reorganization
 
 Version 0.5.2
 + Enhanced: New Cert Handling 
