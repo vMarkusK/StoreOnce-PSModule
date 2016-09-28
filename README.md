@@ -17,7 +17,7 @@ HPE StoreOnce PowerShell Module
 
 Project Owner: Markus Kraus
 
-Project WebSite: http://mycloudrevolution.com/storeonce-powershell-module
+Project WebSite: http://mycloudrevolution.com/projekte/storeonce-powershell-module/
 
 Project Details:
 
