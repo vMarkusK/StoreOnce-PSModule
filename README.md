@@ -47,17 +47,23 @@ Or contact me via any other channel...
 Creates a Base64 hash for further requests against your StoreOnce system(s).
 This should be the first Commandlet you use from this module.
 
+![Set-SOCredentials](/Media/Set-SOCredentials_Neu.png)
+
 ## Get-SOSIDs
 
 Lists all ServiceSets from your StoreOnce system(s).
 
 Outputs: ArrayIP,SSID,Name,Alias,OverallHealth,SerialNumber,Capacity(GB).Free(GB),UserData(GB),DiskData(GB)
 
+![Get-SOSIDs](/Media/Get-SOSIDs_Neu.png)
+
 ## Get-SOCatStores
 
 Lists all Catalyst Stores from your StoreOnce system(s).
 
-Outputs: ArrayIP,SSID,Name,ID,SizeOnDisk(GB),UserDataStored(GB),DedupeRatio
+Outputs: ArrayIP,SSID,Name,ID,Status,Health,SizeOnDisk(GB),UserDataStored(GB),DedupeRatio
+
+![Get-SOCatStores](/Media/Get-SOCatStores_Neu.png)
 
 ## Get-SONasShares
 
@@ -65,11 +71,15 @@ Lists all NAS Stores from your StoreOnce system(s).
 
 Outputs: ArrayIP,SSID,Name,ID,AccessProtocol,SizeOnDisk(GB),UserDataStored(GB),DedupeRatio
 
+![Get-SONasShares](/Media/Get-SONasShares_Neu.png)
+
 ## Get-SOCatClients
 
 Lists all Catalyst Clients from your StoreOnce system(s).
 
 Outputs: ArrayIP,SSID,Name,ID,Description,canCreateStores,canSetServerProperties,canManageClientPermissions
+
+![Get-SOCatClients](/Media/Get-SOCatClients_Neu.png)
 
 ## Get-SOCatStoreAccess
 
@@ -77,9 +87,13 @@ Lists Clients with Access Permissions of a Catalyst Store.
 
 Outputs: Client,allowAccess
 
+![Get-SOCatStoreAccess](/Media/Get-SOCatStoreAccess_Neu.png)
+
 ## New-SOCatStore
 
-Creates a single StoreOnce Catalyst store on a given Service Set on your StoreOnce system.
+Creates a single StoreOnce Catalyst store with default options on a given Service Set on your StoreOnce system.
+
+![New-SOCatStore](/Media/New-SOCatStore_Neu.png)
 
 <a name="Enhancements">
 # Enhancements
