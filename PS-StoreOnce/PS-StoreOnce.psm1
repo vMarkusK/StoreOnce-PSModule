@@ -73,10 +73,10 @@ function Set-SOCredentials {
 		If ($TESTIP) {
 			$TESTCall = @{uri = "https://$TESTIP/storeonceservices/";
 						Method = 'GET';
-							Headers = @{Authorization = 'Basic ' + $SOCred;
-										Accept = 'text/xml'
+						Headers = @{Authorization = 'Basic ' + $SOCred;
+									Accept = 'text/xml'
+						} 
 					} 
-				} 
 				
 			$TESTResponse = Invoke-RestMethod @TESTCall
 			$TESTCount = ($TESTResponse.document.list.item).count
@@ -119,10 +119,10 @@ function Get-SOSIDs {
 		ForEach ($D2DIP in $D2DIPs) {
 			$SIDCall = @{uri = "https://$D2DIP/storeonceservices/cluster/servicesets/";
 						Method = 'GET';
-							Headers = @{Authorization = 'Basic ' + $SOCred;
-										Accept = 'text/xml'
+						Headers = @{Authorization = 'Basic ' + $SOCred;
+									Accept = 'text/xml'
+						} 
 					} 
-				} 
 				
 			$SIDsResponse = Invoke-RestMethod @SIDCall
 			$SIDCount = ($SIDsResponse.document.servicesets.serviceset).count
@@ -189,10 +189,10 @@ function Get-SOCatStores {
 		ForEach ($D2DIP in $D2DIPs) {
 			$SIDCall = @{uri = "https://$D2DIP/storeonceservices/cluster/servicesets/";
 						Method = 'GET';
-							Headers = @{Authorization = 'Basic ' + $SOCred;
-										Accept = 'text/xml'
+						Headers = @{Authorization = 'Basic ' + $SOCred;
+									Accept = 'text/xml'
+						} 
 					} 
-				} 
 			
 			$SIDsResponse = Invoke-RestMethod @SIDCall
 			$SIDCount = ($SIDsResponse.document.servicesets.serviceset).count
@@ -201,10 +201,10 @@ function Get-SOCatStores {
 			for ($x = 1; $x -le $SIDCount; $x++ ){
 				$StoreInf = @{uri = "https://$D2DIP/storeonceservices/cluster/servicesets/$x/services/cat/stores/";
 							Method = 'GET';
-								Headers = @{Authorization = 'Basic ' + $SOCred;
-											Accept = 'text/xml'
+							Headers = @{Authorization = 'Basic ' + $SOCred;
+										Accept = 'text/xml'
+							} 
 						} 
-					} 
 				
 				$StoreInfResponse = Invoke-RestMethod @StoreInf
 				[Array] $SSID = $StoreInfResponse.document.stores.store.properties.ssid
@@ -271,10 +271,10 @@ function Get-SONasShares {
 		ForEach ($D2DIP in $D2DIPs) {
 			$SIDCall = @{uri = "https://$D2DIP/storeonceservices/cluster/servicesets/";
 						Method = 'GET';
-							Headers = @{Authorization = 'Basic ' + $SOCred;
-										Accept = 'text/xml'
+						Headers = @{Authorization = 'Basic ' + $SOCred;
+									Accept = 'text/xml'
+						} 
 					} 
-				} 
 			
 			$SIDsResponse = Invoke-RestMethod @SIDCall
 			$SIDCount = ($SIDsResponse.document.servicesets.serviceset).count
@@ -283,10 +283,10 @@ function Get-SONasShares {
 			for ($x = 1; $x -le $SIDCount; $x++ ){
 				$ShareInf = @{uri = "https://$D2DIP/storeonceservices/cluster/servicesets/$x/services/nas/shares/";
 							Method = 'GET';
-								Headers = @{Authorization = 'Basic ' + $SOCred;
-											Accept = 'text/xml'
+							Headers = @{Authorization = 'Basic ' + $SOCred;
+										Accept = 'text/xml'
+							} 
 						} 
-					} 
 				
 				$ShareInfResponse = Invoke-RestMethod @ShareInf
 				[Array] $Name = $ShareInfResponse.document.shares.share.properties.name
@@ -349,10 +349,10 @@ function Get-SOCatClients {
 		ForEach ($D2DIP in $D2DIPs) {
 			$SIDCall = @{uri = "https://$D2DIP/storeonceservices/cluster/servicesets/";
 						Method = 'GET';
-							Headers = @{Authorization = 'Basic ' + $SOCred;
-										Accept = 'text/xml'
+						Headers = @{Authorization = 'Basic ' + $SOCred;
+									Accept = 'text/xml'
+						} 
 					} 
-				} 
 			
 			$SIDsResponse = Invoke-RestMethod @SIDCall
 			$SIDCount = ($SIDsResponse.document.servicesets.serviceset).count
@@ -361,10 +361,10 @@ function Get-SOCatClients {
 			for ($x = 1; $x -le $SIDCount; $x++ ){
 				$ClientReq = @{uri = "https://$D2DIP/storeonceservices/cluster/servicesets/$x/services/cat/configs/clients/";
 							Method = 'GET';
-								Headers = @{Authorization = 'Basic ' + $SOCred;
-											Accept = 'text/xml'
+							Headers = @{Authorization = 'Basic ' + $SOCred;
+										Accept = 'text/xml'
+							} 
 						} 
-					} 
 				$ClientResponse = Invoke-RestMethod @ClientReq
 			
 				[Array] $Name = $ClientResponse.document.clients.client.properties.name
