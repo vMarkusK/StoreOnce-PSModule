@@ -9,6 +9,5 @@ LONG DESCRIPTION
 
     You can find API documentation here:
         
-
 DETAILED DESCRIPTION
     This is a rudimentary module that allows querying for some basic HPE StoreOnce API objects.

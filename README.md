@@ -77,9 +77,17 @@ Lists Clients with Access Permissions of a Catalyst Store.
 
 Outputs: Client,allowAccess
 
+## New-SOCatStore
+
+Creates a single StoreOnce Catalyst store on a given Service Set on your StoreOnce system.
+
 <a name="Enhancements">
 # Enhancements
 [*Back to top*](#Title)
+
+Version 0.7
++ New: Creates a StoreOnce Catalyst store
++ Enhanced: More details for Get-SOCatStores
 
 Version 0.6
 + Enhanced: Parameter Position declaration 
@@ -93,16 +101,16 @@ Version 0.5.1
 + Enhanced: Optional Credential verification for Set-SOCredentials Commandlet
 
 Version 0.5
-+ Get Clients (Users) with Access Permissions of a Catalyst Store
++ New: Get Clients (Users) with Access Permissions of a Catalyst Store
 
 Version 0.4.1
 + Enhanced: Added ID not NAS and Catalyst
 
 Version 0.4
-+ Get StoreOnce Catalyst Clients (User)
++ New: Get StoreOnce Catalyst Clients (User)
 
 Version 0.3
-+ Get StoreOnce NAS Shares
++ New: Get StoreOnce NAS Shares
 + Renamed StoreOnce Catalyst Stores Commandlet
 + Enhanced: Added Synopsis to Functions
 
@@ -110,9 +118,9 @@ Version 0.2.1
 + Fixed: Issue #4 - Secure Password Input
 
 Version 0.2
-+ Get StoreOnce Catalyst Stores
++ New: Get StoreOnce Catalyst Stores
 
 Version 0.1
-+ Credential Handling for REST Calls
-+ Get StoreOnce SIDs
++ New: Credential Handling for REST Calls
++ New: Get StoreOnce SIDs
 
