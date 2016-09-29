@@ -590,7 +590,7 @@ function New-SOCatClient {
 	Process {
 		if ($SOCred -eq $null) {Write-Error "No System Credential Set! Use 'Set-SOCredentials'." -Category ConnectionError; Return}
 
-		#if (Get-SOCatStores -D2DIPs $D2DIP | where {$_.Name -eq $SOCatStoreName}) {Write-Error "Store $SOCatStoreName already Exists."; Return}
+		if (Get-SOCatClients -D2DIPs $D2DIP | where {$_.Name -eq $SOCatClientName}) {Write-Error "Client $SOCatClientName already Exists."; Return}
 		
 		[String]$SOCatClientPassClear =  [Runtime.InteropServices.Marshal]::PtrToStringAuto([Runtime.InteropServices.Marshal]::SecureStringToBSTR($SOCatClientPass))
 		[Array]$IDs = (Get-SOSIDs -D2DIP $D2DIP).SSID
@@ -602,28 +602,28 @@ function New-SOCatClient {
 										Accept = 'text/xml';
 										'Content-Type' = 'application/x-www-form-urlencoded'
 							}
-							Body = @{name = $SOCatClienteName;
+							Body = @{name = $SOCatClientName;
 									description = $SOCatClientDesc;
 									password = $SOCatClientPassClear;
 									canCreateStores = 'false';
 									canSetServerProperties = 'false';
 									canManageClientPermissions = 'false'
 							} 
-						} 
-			
+						}
+
 			$ClientResponse = Invoke-RestMethod @ClientCall
 		}
-		<#
+		
 		$i = 0
-		while(!(Get-SOCatStores -D2DIPs $D2DIP | where {$_.Name -eq $SOCatStoreName -and $_.Status -eq "Online"})){
+		while(!(Get-SOCatClients -D2DIPs $D2DIP | where {$_.Name -eq $SOCatClientName})){
 			$i++
 			Start-Sleep 1
-		if($i -gt $Timeout) { Write-Error "Creating Store Failed."; break}
-			Write-Progress -Activity "Creating Store" -Status "Wait for Store become Online..."
+		if($i -gt $Timeout) { Write-Error "Creating Client Failed."; break}
+			Write-Progress -Activity "Creating Client" -Status "Wait for Client..."
 		}
 
-		Return (Get-SOCatStores -D2DIPs $D2DIP | where {$_.Name -eq $SOCatStoreName} | ft * -AutoSize)
-		#>
+		Return (Get-SOCatClients -D2DIPs $D2DIP | where {$_.Name -eq $SOCatClientName} | ft * -AutoSize)
+		
 	}
 }
 #endregion
