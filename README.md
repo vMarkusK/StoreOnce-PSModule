@@ -95,9 +95,18 @@ Creates a single StoreOnce Catalyst store with default options on a given Servic
 
 ![New-SOCatStore](/Media/New-SOCatStore_Neu.png)
 
+## New-SOCatClient
+
+Creates a StoreOnce Catalyst Client on all Service Sets on your StoreOnce system.
+
+![New-SOCatClient](/Media/New-SOCatClient_Neu.png)
+
 <a name="Enhancements">
 # Enhancements
 [*Back to top*](#Title)
+
+Version 0.8
++ New: Creates a StoreOnce Catalyst client
 
 Version 0.7
 + New: Creates a StoreOnce Catalyst store
