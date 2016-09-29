@@ -519,7 +519,7 @@ function New-SOCatStore {
 						Body = @{name = $SOCatStoreName;
 								description = $SOCatStoreDesc;
 								primaryTransferPolicy = '0';
-								secondaryTransferPolicy = '0';
+								secondaryTransferPolicy = '1';
 								userDataSizeLimitBytes = '0';
 								dedupedDataSizeOnDiskLimitBytes = '0';
 								dataJobRetentionDays = '90';
