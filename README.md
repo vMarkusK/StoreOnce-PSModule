@@ -101,9 +101,19 @@ Creates a StoreOnce Catalyst Client on all Service Sets on your StoreOnce system
 
 ![New-SOCatClient](/Media/New-SOCatClient_Neu.png)
 
+## Set-SOCatStoreAccess
+
+Permit or deny Client access to a StoreOnce Catalyst Store.
+
+![Set-SOCatStoreAccess](/Media/Set-SOCatStoreAccess_Neu.png)
+
 <a name="Enhancements">
 # Enhancements
 [*Back to top*](#Title)
+
+Version 0.9
++ New: Permit or deny Client access to a StoreOnce Catalyst Store
++ Fix: Parameter Positions
 
 Version 0.8
 + New: Creates a StoreOnce Catalyst client
