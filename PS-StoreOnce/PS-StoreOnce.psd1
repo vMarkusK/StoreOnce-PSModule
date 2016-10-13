@@ -12,7 +12,7 @@
 # RootModule = ''
 
 # Die Versionsnummer dieses Moduls
-ModuleVersion = '1.1.0'
+ModuleVersion = '1.1.1'
 
 # ID zur eindeutigen Kennzeichnung dieses Moduls
 GUID = 'dfe6dfcc-5971-41b9-aa49-f2b5db87f3db'
@@ -75,8 +75,7 @@ NestedModules = @('Functions\Report\Get-SOCatClients.psm1',
                'Functions\Test-IP.psm1')
 
 # Aus diesem Modul zu exportierende Funktionen
-FunctionsToExport = 
-               'Get-SOCatClients Get-SOCatStoreAccess Get-SOCatStores Get-SONasShares Get-SOSIDs New-SOCatClient New-SOCatStore Set-SOCatStoreAccess Set-SOCredentials Test-IP'
+FunctionsToExport = 'Get-SOCatClients', 'Get-SOCatStoreAccess', 'Get-SOCatStores', 'Get-SONasShares', 'Get-SOSIDs', 'New-SOCatClient', 'New-SOCatStore', 'Set-SOCatStoreAccess', 'Set-SOCredentials', 'Test-IP'
 
 # Aus diesem Modul zu exportierende Cmdlets
 CmdletsToExport = @()
