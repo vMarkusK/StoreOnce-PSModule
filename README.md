@@ -111,6 +111,12 @@ Permit or deny Client access to a StoreOnce Catalyst Store.
 # Enhancements
 [*Back to top*](#Title)
 
+Version 1.1
++ New: IP Connection Test before REST Calls
+
+Version 1.0
++ Enhanced: Module restructuring. Each Function has now its own psm1
+
 Version 0.9
 + New: Permit or deny Client access to a StoreOnce Catalyst Store
 + Fix: Parameter Positions
