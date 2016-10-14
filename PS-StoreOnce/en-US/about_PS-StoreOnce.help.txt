@@ -1,13 +1,80 @@
-PSTOPIC
-    about_PS-StoreOnce
-
+TOPIC
+        about_PS-StoreOnce
+        
 SHORT DESCRIPTION
-    PS-StoreOnce allows you to work with the HPE StoreOnce API through PowerShell functions
+        PS-StoreOnce allows you to work with the HPE StoreOnce API through PowerShell functions.
 
 LONG DESCRIPTION
-    PS-StoreOnce allows you to work with the HPE StoreOnce API through PowerShell functions
+        StoreOnce lavarages the HPE StoreOnce API to run basic Commands.
 
-    You can find API documentation here:
+        The moduls is segmented in differenet topics:
+
+        Global
+            * Set-SOCredentials
+
+        Report
+            * Get-SOSIDs
+            * Get-SONasShares
+            * Get-SOCatStores
+            * Get-SOCatClients
+            * Get-SOCatStoreAccess
+        Create
+            * New-SOCatStore 
+            * New-SOCatClient 
+        Config
+            * Set-SOCatStoreAccess 
+
+RUNNING  PS-StoreOnce
+
+        There are several commands provided by the PS-StoreOnce module, those are:
         
-DETAILED DESCRIPTION
-    This is a rudimentary module that allows querying for some basic HPE StoreOnce API objects.
+        Set-SOCredentials       –SOUser –SOPassword 
+                                [-TESTIP -ShowHash]
+
+        Get-SOSIDs              -D2DIPs
+
+        Get-SOCatStores         -D2DIPs
+
+        Get-SONasShares         -D2DIPs
+
+        Get-SOCatClients        -D2DIPs
+
+        Get-SOCatStoreAccess    -D2DIP -CatStore
+
+        New-SOCatStore          -D2DIP-SSID -SOCatStoreName 
+                                [-SOCatStoreDesc -Timeout]
+
+        New-SOCatClient         -D2DIP-SSID -SOCatClientName 
+                                [-SOCatClientDesc -Timeout]
+
+        Set-SOCatStoreAccess    -D2DIP -SOCatClientName -SOCatStoreName -allowAccess
+
+        To initialize the credentials for your StoreOnce System simple run:
+        
+        PS C:\> Set-SOCredentials
+
+        And then all other commands:
+
+        PS C:\> Get-SOSIDs -D2DIPs 192.168.2.1, 192.168.2.2
+        
+CONTRIBUTE
+
+        PS-StoreOnce is on GitHub:
+        
+        https://github.com/mycloudrevolution/StoreOnce-PSModule
+
+        My project site for this Module:
+
+        http://mycloudrevolution.com/projekte/storeonce-powershell-module/
+        
+        As you run the PS-StoreOnce and find what you believe to be are bugs,
+        please submit them to:
+        
+        https://github.com/mycloudrevolution/StoreOnce-PSModule/issues
+        
+        Better yet, fix the bug and submit a pull request.
+
+        Enhancement request are also welcome!
+        
+SEE ALSO
+        Invoke-RestMethod

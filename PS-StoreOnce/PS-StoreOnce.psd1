@@ -3,7 +3,7 @@
 #
 # Generiert von: Markus Kraus
 #
-# Generiert am: 13.10.2016
+# Generiert am: 14.10.2016
 #
 
 @{
@@ -12,7 +12,7 @@
 # RootModule = ''
 
 # Die Versionsnummer dieses Moduls
-ModuleVersion = '1.1.1'
+ModuleVersion = '1.2.0'
 
 # ID zur eindeutigen Kennzeichnung dieses Moduls
 GUID = 'dfe6dfcc-5971-41b9-aa49-f2b5db87f3db'
@@ -75,16 +75,18 @@ NestedModules = @('Functions\Report\Get-SOCatClients.psm1',
                'Functions\Test-IP.psm1')
 
 # Aus diesem Modul zu exportierende Funktionen
-FunctionsToExport = 'Get-SOCatClients', 'Get-SOCatStoreAccess', 'Get-SOCatStores', 'Get-SONasShares', 'Get-SOSIDs', 'New-SOCatClient', 'New-SOCatStore', 'Set-SOCatStoreAccess', 'Set-SOCredentials', 'Test-IP'
+FunctionsToExport = 'Get-SOCatClients', 'Get-SOCatStoreAccess', 'Get-SOCatStores', 
+               'Get-SONasShares', 'Get-SOSIDs', 'New-SOCatClient', 'New-SOCatStore', 
+               'Set-SOCatStoreAccess', 'Set-SOCredentials', 'Test-IP'
 
 # Aus diesem Modul zu exportierende Cmdlets
-CmdletsToExport = @()
+CmdletsToExport = '*'
 
 # Die aus diesem Modul zu exportierenden Variablen
-VariablesToExport = @()
+VariablesToExport = '*'
 
 # Aus diesem Modul zu exportierende Aliase
-AliasesToExport = @()
+AliasesToExport = '*'
 
 # Aus diesem Modul zu exportierende DSC-Ressourcen
 # DscResourcesToExport = @()
