@@ -1,0 +1,97 @@
+{
+	"id": "19a026a5-2969-d807-d9a4-857d5f2b92ba",
+	"name": "HPE StoreOnce",
+	"description": "",
+	"order": [],
+	"folders": [
+		{
+			"id": "87661421-9351-82a9-2ad6-eb1430d26480",
+			"name": "Report",
+			"description": "",
+			"order": [
+				"a25da117-8fa9-12a0-8bd2-e13e035267e9",
+				"c2b987f9-4cb4-de18-c918-40049959cb76",
+				"38d6a398-4bd9-2f2c-dbf9-47413f220d1d",
+				"d33c0d0a-9bfb-6a99-7d2b-9b8308df64fa"
+			],
+			"owner": "1172983"
+		}
+	],
+	"timestamp": 1477385597121,
+	"owner": "1172983",
+	"public": false,
+	"requests": [
+		{
+			"id": "38d6a398-4bd9-2f2c-dbf9-47413f220d1d",
+			"headers": "Accept: text/xml\n",
+			"url": "https://{{SOIP}}/storeonceservices/cluster/servicesets/1/services/cat/stores/",
+			"preRequestScript": null,
+			"pathVariables": {},
+			"method": "GET",
+			"data": null,
+			"dataMode": "params",
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1477386805970,
+			"name": " Get-SOCatStores",
+			"description": "",
+			"collectionId": "19a026a5-2969-d807-d9a4-857d5f2b92ba",
+			"responses": []
+		},
+		{
+			"id": "a25da117-8fa9-12a0-8bd2-e13e035267e9",
+			"headers": "Accept: text/xml\n",
+			"url": "https://{{SOIP}}/storeonceservices/cluster/servicesets/",
+			"preRequestScript": null,
+			"pathVariables": {},
+			"method": "GET",
+			"data": null,
+			"dataMode": "params",
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1477386004579,
+			"name": " Get-SOSIDs",
+			"description": "",
+			"collectionId": "19a026a5-2969-d807-d9a4-857d5f2b92ba",
+			"responses": []
+		},
+		{
+			"id": "c2b987f9-4cb4-de18-c918-40049959cb76",
+			"headers": "Accept: text/xml\n",
+			"url": "https://{{SOIP}}/storeonceservices/cluster/servicesets/1/services/nas/shares/",
+			"preRequestScript": null,
+			"pathVariables": {},
+			"method": "GET",
+			"data": null,
+			"dataMode": "params",
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1477386745947,
+			"name": " Get-SONASShares",
+			"description": "",
+			"collectionId": "19a026a5-2969-d807-d9a4-857d5f2b92ba",
+			"responses": []
+		},
+		{
+			"id": "d33c0d0a-9bfb-6a99-7d2b-9b8308df64fa",
+			"headers": "Accept: text/xml\n",
+			"url": "https://{{SOIP}}/storeonceservices/cluster/servicesets/1/services/cat/configs/clients/",
+			"preRequestScript": null,
+			"pathVariables": {},
+			"method": "GET",
+			"data": null,
+			"dataMode": "params",
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1477386887826,
+			"name": " Get-SOCatClients",
+			"description": "",
+			"collectionId": "19a026a5-2969-d807-d9a4-857d5f2b92ba",
+			"responses": []
+		}
+	]
+}
