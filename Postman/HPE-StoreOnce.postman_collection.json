@@ -41,7 +41,7 @@
 		},
 		{
 			"id": "a25da117-8fa9-12a0-8bd2-e13e035267e9",
-			"headers": "Accept: text/xml\n",
+			"headers": "Accept: text/xml\nAuthorization: {{SOAuth}}\n",
 			"url": "https://{{SOIP}}/storeonceservices/cluster/servicesets/",
 			"preRequestScript": null,
 			"pathVariables": {},
@@ -51,7 +51,7 @@
 			"tests": null,
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1477386004579,
+			"time": 1477387019442,
 			"name": " Get-SOSIDs",
 			"description": "",
 			"collectionId": "19a026a5-2969-d807-d9a4-857d5f2b92ba",
