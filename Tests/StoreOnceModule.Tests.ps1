@@ -20,7 +20,7 @@ Describe "Connect-SOAppliance Tests" {
 
     Clear-Variable SOConnections -Scope Global -ErrorAction SilentlyContinue
     $connection = Connect-SOAppliance -Server $SOAppliance -Username $SOUser -Password $SOPass
-    It "Connection is active" {
+    It "Connection exists" {
         ($Global:SOConnections).count | Should Be 1
     }
 
