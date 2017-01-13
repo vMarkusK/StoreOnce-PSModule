@@ -33,23 +33,13 @@ function Connect-SOAppliance {
     .PARAMETER Credential
     Credential object to connect with
 
-    .INPUTS
-    System.String
-    Management.Automation.PSCredential
-    Switch
-
-    .OUTPUTS
-    System.Management.Automation.PSObject.
-
     .EXAMPLE
     Connect-SOAppliance -Server d2d01.lan.local -Username TenantAdmin01 -Password P@ssword -IgnoreCertRequirements
 
     .EXAMPLE
     Connect-SOAppliance -Server d2d01.lan.local -Credential (Get-Credential)
 
-    .EXAMPLE
-    Connect-SOAppliance -Server d2d01.lan.local -Port 443 -Credential (Get-Credential)
-
+#Requires PS -Version 4.0
 #>
 [CmdletBinding(DefaultParametersetName="Username")][OutputType('System.Management.Automation.PSObject')]
 
@@ -128,7 +118,6 @@ function Connect-SOAppliance {
         if ($TESTCount -lt 1) {throw "No valid API Response!"}
 
         Write-Output $Global:SOConnections
-
 
     }
     catch [Exception]{
