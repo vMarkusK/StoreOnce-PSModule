@@ -12,7 +12,7 @@
 # RootModule = ''
 
 # Die Versionsnummer dieses Moduls
-ModuleVersion = '1.2.2'
+ModuleVersion = '1.2.3'
 
 # ID zur eindeutigen Kennzeichnung dieses Moduls
 GUID = 'dfe6dfcc-5971-41b9-aa49-f2b5db87f3db'
@@ -64,6 +64,7 @@ PowerShellVersion = '4.0'
 
 # Die Module, die als geschachtelte Module des in "RootModule/ModuleToProcess" angegebenen Moduls importiert werden sollen.
 NestedModules = @('Functions\Connect-SOAppliance.psm1', 
+               'Functions\Get-SOAppliance.psm1', 
                'Functions\Report\Get-SOCatClients.psm1', 
                'Functions\Report\Get-SOCatStoreAccess.psm1', 
                'Functions\Report\Get-SOCatStores.psm1', 
@@ -76,10 +77,10 @@ NestedModules = @('Functions\Connect-SOAppliance.psm1',
                'Functions\Test-IP.psm1')
 
 # Aus diesem Modul zu exportierende Funktionen
-FunctionsToExport = 'Connect-SOAppliance', 'Get-SOCatClients', 'Get-SOCatStoreAccess', 
-               'Get-SOCatStores', 'Get-SONasShares', 'Get-SOSIDs', 'New-SOCatClient', 
-               'New-SOCatStore', 'Set-SOCatStoreAccess', 'Set-SOCredentials', 
-               'Test-IP'
+FunctionsToExport = 'Connect-SOAppliance', 'Get-SOAppliance', 'Get-SOCatClients', 
+               'Get-SOCatStoreAccess', 'Get-SOCatStores', 'Get-SONasShares', 
+               'Get-SOSIDs', 'New-SOCatClient', 'New-SOCatStore', 
+               'Set-SOCatStoreAccess', 'Set-SOCredentials', 'Test-IP'
 
 # Aus diesem Modul zu exportierende Cmdlets
 CmdletsToExport = '*'
