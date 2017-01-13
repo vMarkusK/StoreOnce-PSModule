@@ -18,7 +18,7 @@ function Get-SOSIDs {
 
 	)
 	Process {
-		if (!$Global:SOConnections) {Write-Error "No StoreOnce Appliance(s) connected! Use 'Connect-SOAppliance'" -Category ConnectionError; Return}
+		if (!$Global:SOConnections) {throw "No StoreOnce Appliance(s) connected! Use 'Connect-SOAppliance'"}
 		$SOSIDs =  @()
 		
 		ForEach ($SOConnection in $($Global:SOConnections)) {
