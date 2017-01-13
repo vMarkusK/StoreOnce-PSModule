@@ -1,9 +1,9 @@
 #
-# Modulmanifest für das Modul "NewManifest"
+# Modulmanifest für das Modul "PSGet_PS-StoreOnce"
 #
 # Generiert von: Markus Kraus
 #
-# Generiert am: 14.10.2016
+# Generiert am: 13.01.2017
 #
 
 @{
@@ -12,7 +12,7 @@
 # RootModule = ''
 
 # Die Versionsnummer dieses Moduls
-ModuleVersion = '1.2.0'
+ModuleVersion = '1.2.1'
 
 # ID zur eindeutigen Kennzeichnung dieses Moduls
 GUID = 'dfe6dfcc-5971-41b9-aa49-f2b5db87f3db'
@@ -45,25 +45,26 @@ PowerShellVersion = '4.0'
 # CLRVersion = ''
 
 # Die für dieses Modul erforderliche Prozessorarchitektur ("Keine", "X86", "Amd64").
-ProcessorArchitecture = 'None'
+# ProcessorArchitecture = ''
 
 # Die Module, die vor dem Importieren dieses Moduls in die globale Umgebung geladen werden müssen
 # RequiredModules = @()
 
 # Die Assemblys, die vor dem Importieren dieses Moduls geladen werden müssen
-RequiredAssemblies = @()
+# RequiredAssemblies = @()
 
 # Die Skriptdateien (PS1-Dateien), die vor dem Importieren dieses Moduls in der Umgebung des Aufrufers ausgeführt werden.
-ScriptsToProcess = @()
+# ScriptsToProcess = @()
 
 # Die Typdateien (.ps1xml), die beim Importieren dieses Moduls geladen werden sollen
-TypesToProcess = @()
+# TypesToProcess = @()
 
 # Die Formatdateien (.ps1xml), die beim Importieren dieses Moduls geladen werden sollen
-FormatsToProcess = @()
+# FormatsToProcess = @()
 
 # Die Module, die als geschachtelte Module des in "RootModule/ModuleToProcess" angegebenen Moduls importiert werden sollen.
-NestedModules = @('Functions\Report\Get-SOCatClients.psm1', 
+NestedModules = @('Functions\Connect-SOAppliance.psm1', 
+               'Functions\Report\Get-SOCatClients.psm1', 
                'Functions\Report\Get-SOCatStoreAccess.psm1', 
                'Functions\Report\Get-SOCatStores.psm1', 
                'Functions\Report\Get-SONasShares.psm1', 
@@ -75,9 +76,10 @@ NestedModules = @('Functions\Report\Get-SOCatClients.psm1',
                'Functions\Test-IP.psm1')
 
 # Aus diesem Modul zu exportierende Funktionen
-FunctionsToExport = 'Get-SOCatClients', 'Get-SOCatStoreAccess', 'Get-SOCatStores', 
-               'Get-SONasShares', 'Get-SOSIDs', 'New-SOCatClient', 'New-SOCatStore', 
-               'Set-SOCatStoreAccess', 'Set-SOCredentials', 'Test-IP'
+FunctionsToExport = 'Connect-SOAppliance', 'Get-SOCatClients', 'Get-SOCatStoreAccess', 
+               'Get-SOCatStores', 'Get-SONasShares', 'Get-SOSIDs', 'New-SOCatClient', 
+               'New-SOCatStore', 'Set-SOCatStoreAccess', 'Set-SOCredentials', 
+               'Test-IP'
 
 # Aus diesem Modul zu exportierende Cmdlets
 CmdletsToExport = '*'
@@ -95,7 +97,7 @@ AliasesToExport = '*'
 # ModuleList = @()
 
 # Liste aller Dateien in diesem Modulpaket
-FileList = @()
+# FileList = @()
 
 # Die privaten Daten, die an das in "RootModule/ModuleToProcess" angegebene Modul übergeben werden sollen. Diese können auch eine PSData-Hashtabelle mit zusätzlichen von PowerShell verwendeten Modulmetadaten enthalten.
 PrivateData = @{
