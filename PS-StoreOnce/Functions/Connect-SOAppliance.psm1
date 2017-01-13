@@ -107,8 +107,12 @@ function Connect-SOAppliance {
         $Auth = $Username + ':' + $Password
         $Encoded = [System.Text.Encoding]::UTF8.GetBytes($Auth)
         $EncodedPassword = [System.Convert]::ToBase64String($Encoded)
-            
-        $Global:SOConnection = [pscustomobject]@{                        
+
+        if (!$Global:SOConnections) {
+            $Global:SOConnections = @()
+        }
+        
+        $SOConnection = [pscustomobject]@{                        
                         
             Server = "$($Server):$($Port)"
             Username = $Username
@@ -116,14 +120,16 @@ function Connect-SOAppliance {
 
         }
 
+        $Global:SOConnections += $SOConnection
+
         # --- Update vROConnection with version information
         #$VersionInfo = Get-vROVersion
         #$Global:vROConnection.Version = $VersionInfo.Version
         #$Global:vROConnection.APIVersion = $VersionInfo.APIVersion
 
-        $TESTCall = @{uri = "https://$($Global:SOConnection.Server)/storeonceservices/";
+        $TESTCall = @{uri = "https://$($Global:SOConnections[-1].Server)/storeonceservices/";
                             Method = 'GET';
-                            Headers = @{Authorization = 'Basic ' + $($Global:SOConnection.EncodedPassword);
+                            Headers = @{Authorization = 'Basic ' + $($Global:SOConnections[-1].EncodedPassword);
                                         Accept = 'text/xml'
                             } 
                         } 
@@ -131,17 +137,15 @@ function Connect-SOAppliance {
         $TESTResponse = Invoke-RestMethod @TESTCall
         $TESTCount = ($TESTResponse.document.list.item).count
             
-        if ($TESTCount -lt 1) {Write-Error "Wrong Credentials!" -Category ConnectionError; throw "Could not log in with given credentials."}
-        else {Write-Output "Credentials OK!"}
+        if ($TESTCount -lt 1) {throw "No Valid API Response!"}
 
-
-        Write-Output $Global:SOConnection
+        Write-Output $Global:SOConnections
 
 
     }
     catch [Exception]{
 
-        Remove-Variable -Name SOConnection -Scope Global -Force -ErrorAction SilentlyContinue
+        Remove-Variable -Name SOConnections -Scope Global -Force -ErrorAction SilentlyContinue
         throw $_.Exception.Message
 
     }
