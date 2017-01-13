@@ -24,9 +24,6 @@ function Connect-SOAppliance {
     .PARAMETER Server
     StoreOnce Appliance to connect to
 
-    .PARAMETER Port
-    Optionally specify the Appliance port. Default is 443
-
     .PARAMETER Username
     Username to connect with
 
@@ -61,10 +58,6 @@ function Connect-SOAppliance {
     [Parameter(Mandatory=$true)]
     [ValidateNotNullOrEmpty()]
     [String]$Server,
-
-    [Parameter(Mandatory=$false)]
-    [ValidateNotNullOrEmpty()]
-    [Int]$Port = 443,    
     
     [Parameter(Mandatory=$true,ParameterSetName="Username")]
     [ValidateNotNullOrEmpty()]
@@ -85,8 +78,8 @@ function Connect-SOAppliance {
 
     try {
   
-        Write-Verbose -Message "Testing connectivity to $($Server):$($Port)"
-        Test-IP -IP $Server -Port $Port
+        Write-Verbose -Message "Testing connectivity to $($Server)"
+        Test-IP -IP $Server
 
     }
     catch [Exception] {
@@ -114,18 +107,13 @@ function Connect-SOAppliance {
         
         $SOConnection = [pscustomobject]@{                        
                         
-            Server = "$($Server):$($Port)"
+            Server = $Server
             Username = $Username
             EncodedPassword = $EncodedPassword
 
         }
 
         $Global:SOConnections += $SOConnection
-
-        # --- Update vROConnection with version information
-        #$VersionInfo = Get-vROVersion
-        #$Global:vROConnection.Version = $VersionInfo.Version
-        #$Global:vROConnection.APIVersion = $VersionInfo.APIVersion
 
         $TESTCall = @{uri = "https://$($Global:SOConnections[-1].Server)/storeonceservices/";
                             Method = 'GET';
@@ -137,7 +125,7 @@ function Connect-SOAppliance {
         $TESTResponse = Invoke-RestMethod @TESTCall
         $TESTCount = ($TESTResponse.document.list.item).count
             
-        if ($TESTCount -lt 1) {throw "No Valid API Response!"}
+        if ($TESTCount -lt 1) {throw "No valid API Response!"}
 
         Write-Output $Global:SOConnections
 
