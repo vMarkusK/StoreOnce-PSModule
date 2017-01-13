@@ -25,7 +25,7 @@ function Connect-SOAppliance {
     StoreOnce Appliance to connect to
 
     .PARAMETER Port
-    Optionally specify the server port. Default is 443
+    Optionally specify the Appliance port. Default is 443
 
     .PARAMETER Username
     Username to connect with
@@ -45,13 +45,13 @@ function Connect-SOAppliance {
     System.Management.Automation.PSObject.
 
     .EXAMPLE
-    Connect-vROServer -Server d2d01.lan.local -Username TenantAdmin01 -Password P@ssword -IgnoreCertRequirements
+    Connect-SOAppliance -Server d2d01.lan.local -Username TenantAdmin01 -Password P@ssword -IgnoreCertRequirements
 
     .EXAMPLE
-    Connect-vROServer -Server d2d01.lan.local -Credential (Get-Credential)
+    Connect-SOAppliance -Server d2d01.lan.local -Credential (Get-Credential)
 
     .EXAMPLE
-    Connect-vROServer -Server d2d01.lan.local -Port 443 -Credential (Get-Credential)
+    Connect-SOAppliance -Server d2d01.lan.local -Port 443 -Credential (Get-Credential)
 
 #>
 [CmdletBinding(DefaultParametersetName="Username")][OutputType('System.Management.Automation.PSObject')]
@@ -86,7 +86,6 @@ function Connect-SOAppliance {
     try {
   
         Write-Verbose -Message "Testing connectivity to $($Server):$($Port)"
-
         Test-IP -IP $Server -Port $Port
 
     }
@@ -105,12 +104,10 @@ function Connect-SOAppliance {
        
     try {
 
-        # --- Set Encoded Password
         $Auth = $Username + ':' + $Password
         $Encoded = [System.Text.Encoding]::UTF8.GetBytes($Auth)
         $EncodedPassword = [System.Convert]::ToBase64String($Encoded)
             
-        # --- Create Output Object                
         $Global:SOConnection = [pscustomobject]@{                        
                         
             Server = "$($Server):$($Port)"
