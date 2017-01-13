@@ -6,30 +6,26 @@
 	.Description
 	Lists all Catalyst Clients from your StoreOnce system(s).
 	Outputs: ArrayIP,SSID,Name,ID,Description,canCreateStores,canSetServerProperties,canManageClientPermissions
-	
-	.Parameter D2DIPs
-	IP Address of your StoreOnce system(s).
 
 	.Example
-	Get-SOCatClients -D2DIPs 192.168.2.1, 192.168.2.2
+	Get-SOCatClients
 
 #Requires PS -Version 4.0
 #>
 function Get-SOCatClients {
 	[CmdletBinding()]
 	param (
-		[parameter(Mandatory=$true, Position=0)]
-			$D2DIPs
+
 	)
 	Process {
-		if ($SOCred -eq $null) {Write-Error "No System Credential Set! Use 'Set-SOCredentials'."; Return}
+		if (!$Global:SOConnections) {throw "No StoreOnce Appliance(s) connected! Use 'Connect-SOAppliance'"}
 		$SOCatClients =  @()
 		
-		ForEach ($D2DIP in $D2DIPs) {
-            if (Test-IP -IP $D2DIP) {
-                $SIDCall = @{uri = "https://$D2DIP/storeonceservices/cluster/servicesets/";
+		ForEach ($SOConnection in $($Global:SOConnections)) {
+            if (Test-IP -IP $($SOConnection.Server)) {
+                $SIDCall = @{uri = "https://$($SOConnection.Server)/storeonceservices/cluster/servicesets/";
                             Method = 'GET';
-                            Headers = @{Authorization = 'Basic ' + $SOCred;
+                            Headers = @{Authorization = 'Basic ' + $($SOConnection.EncodedPassword);
                                         Accept = 'text/xml'
                             } 
                         } 
@@ -39,9 +35,9 @@ function Get-SOCatClients {
                 if ($SIDCount -eq $null) {$SIDCount = 1}
                 
                 for ($x = 1; $x -le $SIDCount; $x++ ){
-                    $ClientReq = @{uri = "https://$D2DIP/storeonceservices/cluster/servicesets/$x/services/cat/configs/clients/";
+                    $ClientReq = @{uri = "https://$($SOConnection.Server)/storeonceservices/cluster/servicesets/$x/services/cat/configs/clients/";
                                 Method = 'GET';
-                                Headers = @{Authorization = 'Basic ' + $SOCred;
+                                Headers = @{Authorization = 'Basic ' + $($SOConnection.EncodedPassword);
                                             Accept = 'text/xml'
                                 } 
                             } 
@@ -58,7 +54,8 @@ function Get-SOCatClients {
                     for ($i = 0; $i -lt $ClientCount; $i++ ){
                                 
                         $row = [PSCustomObject] @{
-                            ArrayIP = $D2DIP
+                            System = $($SOConnection.Server)
+						    SIDCount = [String] $SIDCount
                             SSID = $x
                             Name = $Name[$i]
                             ID = $ID[$i]
