@@ -17,8 +17,7 @@ function Get-SOAppliance {
 	)
 	Process {
 		if (!$Global:SOConnections) {throw "No StoreOnce Appliance(s) connected! Use 'Connect-SOAppliance'"}
-		
-		
+			
 	Return $Global:SOConnections
 	}
 } 

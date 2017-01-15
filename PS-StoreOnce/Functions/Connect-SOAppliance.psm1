@@ -34,7 +34,7 @@ function Connect-SOAppliance {
     Credential object to connect with
 
     .EXAMPLE
-    Connect-SOAppliance -Server d2d01.lan.local -Username TenantAdmin01 -Password P@ssword -IgnoreCertRequirements
+    Connect-SOAppliance -Server d2d01.lan.local -Username TenantAdmin01 -Password P@ssword
 
     .EXAMPLE
     Connect-SOAppliance -Server d2d01.lan.local -Credential (Get-Credential)
@@ -68,7 +68,6 @@ function Connect-SOAppliance {
 
     try {
   
-        Write-Verbose -Message "Testing connectivity to $($Server)"
         Test-IP -IP $Server
 
     }
