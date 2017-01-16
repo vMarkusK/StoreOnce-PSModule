@@ -6,8 +6,8 @@
     .Description
     Create a single StoreOnce Catalyst store on a given Service Set on your StoreOnce system.
 	
-    .Parameter D2DIP
-    IP Address of your StoreOnce system.
+    .Parameter Server
+    IP Address oder DNS Name of your StoreOnce system like defined via Connect-SOAppliance (check Get-SOConnections).
 
     .Parameter SSID
     Target Service Set for the new Store on your StoreOnce system.
@@ -22,7 +22,7 @@
     Timeout for the Store creation process (Default is 30 Seconds).
 
     .Example
-    New-SOCatStore -D2DIP 192.168.2.1 -SSID 1 -SOCatStoreName MyNewStore
+    New-SOCatStore -Server 192.168.2.1 -SSID 1 -SOCatStoreName MyNewStore
 
 #Requires PS -Version 4.0
 #>
@@ -30,7 +30,7 @@ function New-SOCatStore {
 	[CmdletBinding()]
 	param (
 		[parameter(Mandatory=$true, Position=0)]
-			[String]$D2DIP,
+			[String]$Server,
 		[parameter(Mandatory=$true, Position=1)]
 			[String]$SSID,
 		[parameter(Mandatory=$true, Position=2)]
@@ -42,13 +42,17 @@ function New-SOCatStore {
 			
 	)
 	Process {
-		if ($SOCred -eq $null) {Write-Error "No System Credential Set! Use 'Set-SOCredentials'." -Category ConnectionError; Return}
+		if (!$Global:SOConnections) {throw "No StoreOnce Appliance(s) connected! Use 'Connect-SOAppliance'"}
+        if ($Server.count -gt 1) {throw "This Command only Supports one D2D System."}
+        $Connection = $Global:SOConnections | Where {$_.Server -eq $Server}
+		if (!$Connection) {throw "No D2D System found, check Get-SOConnections."}
+        if ($Connection.count -gt 1) {throw "This Command only Supports one D2D System."}
 
-        if (Test-IP -IP $D2DIP) {
-            if (Get-SOCatStores -D2DIPs $D2DIP | where {$_.Name -eq $SOCatStoreName}) {Write-Error "Store $SOCatStoreName already Exists."; Return}
-            $StoreCall = @{uri = "https://$D2DIP/storeonceservices/cluster/servicesets/$SSID/services/cat/stores/";
+        if (Test-IP -IP $($SOConnections.Server)) {
+            if (Get-SOCatStores | where {$_.Name -eq $SOCatStoreName -and $_.System -eq $($SOConnections.Server)}) {throw "Store $SOCatStoreName already Exists."}
+            $StoreCall = @{uri = "https://$($SOConnections.Server)/storeonceservices/cluster/servicesets/$SSID/services/cat/stores/";
                             Method = 'POST';
-                            Headers = @{Authorization = 'Basic ' + $SOCred;
+                            Headers = @{Authorization = 'Basic ' + $($SOConnections.EncodedPassword);
                                         Accept = 'text/xml';
                                         'Content-Type' = 'application/x-www-form-urlencoded'
                             }
@@ -68,7 +72,7 @@ function New-SOCatStore {
             $StoreResponse = Invoke-RestMethod @StoreCall
             
             $i = 0
-            while(!(Get-SOCatStores -D2DIPs $D2DIP | where {$_.Name -eq $SOCatStoreName -and $_.Status -eq "Online"})){
+            while(!(Get-SOCatStores | where {$_.Name -eq $SOCatStoreName -and $_.System -eq $($SOConnections.Server) -and $_.Status -eq "Online"})){
                 $i++
                 Start-Sleep 1
             if($i -gt $Timeout) { Write-Error "Creating Store Failed."; break}
@@ -76,7 +80,7 @@ function New-SOCatStore {
             }
         }
 
-		Return (Get-SOCatStores -D2DIPs $D2DIP | where {$_.Name -eq $SOCatStoreName} | ft * -AutoSize)
+		Return (Get-SOCatStores | where {$_.Name -eq $SOCatStoreName -and $_.System -eq $($SOConnections.Server)} | ft * -AutoSize)
 	}
 }
 #endregion
