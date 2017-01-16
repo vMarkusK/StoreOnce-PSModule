@@ -24,8 +24,10 @@ function Remove-SOCatClient {
 	[CmdletBinding()]
 	param (
 		[parameter(Mandatory=$true, Position=0)]
+        [ValidateNotNullOrEmpty()]
 			[String]$Server,
 		[parameter(Mandatory=$true, Position=2)]
+        [ValidateNotNullOrEmpty()]
 			[String]$SOCatClientName,
 		[parameter(Mandatory=$false, Position=4)]
 			[Int]$Timeout = 30

@@ -27,10 +27,13 @@ function Remove-SOCatStore {
 	[CmdletBinding()]
 	param (
 		[parameter(Mandatory=$true, Position=0)]
+        [ValidateNotNullOrEmpty()]
 			[String]$Server,
 		[parameter(Mandatory=$true, Position=1)]
+        [ValidateNotNullOrEmpty()]
 			[String]$SSID,
 		[parameter(Mandatory=$true, Position=2)]
+        [ValidateNotNullOrEmpty()]
 			[String]$SOCatStoreName,
 		[parameter(Mandatory=$false, Position=4)]
 			[Int]$Timeout = 30

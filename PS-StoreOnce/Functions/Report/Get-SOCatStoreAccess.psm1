@@ -22,8 +22,10 @@ function Get-SOCatStoreAccess {
 	[CmdletBinding()]
 	param (
 		[parameter(Mandatory=$true, Position=0)]
+        [ValidateNotNullOrEmpty()]
 			$Server,
 		[parameter(Mandatory=$true, Position=1)]
+        [ValidateNotNullOrEmpty()]
 			[String]$CatStore
 	)
 	Process {

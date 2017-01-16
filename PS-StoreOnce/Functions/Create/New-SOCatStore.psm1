@@ -30,10 +30,13 @@ function New-SOCatStore {
 	[CmdletBinding()]
 	param (
 		[parameter(Mandatory=$true, Position=0)]
+        [ValidateNotNullOrEmpty()]
 			[String]$Server,
 		[parameter(Mandatory=$true, Position=1)]
+        [ValidateNotNullOrEmpty()]
 			[String]$SSID,
 		[parameter(Mandatory=$true, Position=2)]
+        [ValidateNotNullOrEmpty()]
 			[String]$SOCatStoreName,
 		[parameter(Mandatory=$false, Position=3)]
 			[String]$SOCatStoreDesc = $SOCatStoreName,

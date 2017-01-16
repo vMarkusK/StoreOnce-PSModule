@@ -11,7 +11,7 @@ $error.Clear()
 Describe "Module Tests" {
 
     Remove-Module PS-StoreOnce -ErrorAction SilentlyContinue
-    It "Importing PowerCLI Modules" {
+    It "Importing PS-StoreOnce Module" {
         Import-Module ./PS-StoreOnce/PS-StoreOnce.psd1
 	    Get-Module PS-StoreOnce | Should Be $true
     }
@@ -132,18 +132,6 @@ Describe "New-SOCatStore Tests" {
 
 }
 
-Describe "Remove-SOCatStore Tests" {
-
-    It "Remove Catalyst Store" {
-        (Remove-SOCatStore -Server $SOAppliance -SSID 1 -SOCatStoreName myPesterStore)
-        (Get-SOCatStores | where {$_.Name -eq "myPesterStore" -and $_.System -eq $SOAppliance}) | Should not be "Online"
-    }
-    It "Check errors" {
-        $error.Count | should be 0
-    }
-
-}
-
 Describe "New-SOCatClient Tests" {
 
     <#
@@ -161,8 +149,35 @@ Describe "New-SOCatClient Tests" {
 
 }
 
-describe "Remove-SOCatClient Tests" {
+Describe "Set-SOCatStoreAccess Tests" {
 
+    It "Set Access" {
+        (Set-SOCatStoreAccess -Server $SOAppliance -SOCatClientName myPesterClient -SOCatStoreName myPesterStore -allowAccess:$true)
+        (Get-SOCatStoreAccess -Server $SOAppliance -CatStore "myPesterStore").Client | Should be "myPesterClient"
+    }
+     It "Remove Access" {
+        (Set-SOCatStoreAccess -Server $SOAppliance -SOCatClientName myPesterClient -SOCatStoreName myPesterStore -allowAccess:$false)
+        (Get-SOCatStoreAccess -Server $SOAppliance -CatStore "myPesterStore").Client | Should not be "myPesterClient"
+    }
+    It "Check errors" {
+        $error.Count | should be 0
+    }
+
+}
+
+Describe "Remove-SOCatStore Tests" {
+
+    It "Remove Catalyst Store" {
+        (Remove-SOCatStore -Server $SOAppliance -SSID 1 -SOCatStoreName myPesterStore)
+        (Get-SOCatStores | where {$_.Name -eq "myPesterStore" -and $_.System -eq $SOAppliance}) | Should not be "Online"
+    }
+    It "Check errors" {
+        $error.Count | should be 0
+    }
+
+}
+
+Describe "Remove-SOCatClient Tests" {
 
     It "Remove Client" {
         (Remove-SOCatClient -Server $SOAppliance -SOCatClientName myPesterClient)
