@@ -6,7 +6,7 @@
 	Lists all connected StoreOnce Appliannce(s).
 	
 	.Example
-	Get-SOSIDs
+	Get-SOAppliance
 
 #Requires PS -Version 4.0
 #>

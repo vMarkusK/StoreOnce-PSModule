@@ -5,7 +5,6 @@
 
 	.Description
 	Lists all Catalyst Clients from your StoreOnce system(s).
-	Outputs: ArrayIP,SSID,Name,ID,Description,canCreateStores,canSetServerProperties,canManageClientPermissions
 
 	.Example
 	Get-SOCatClients

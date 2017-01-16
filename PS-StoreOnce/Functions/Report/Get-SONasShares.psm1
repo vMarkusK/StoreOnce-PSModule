@@ -5,7 +5,6 @@
 
     .Description
     Lists all NAS Stores from your StoreOnce system(s).
-    Outputs: ArrayIP,SSID,Name,ID,AccessProtocol,SizeOnDisk(GB),UserDataStored(GB),DedupeRatio
 
     .Example
     Get-SONasShares

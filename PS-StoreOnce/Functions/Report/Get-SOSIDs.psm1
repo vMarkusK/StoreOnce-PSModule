@@ -5,7 +5,6 @@
 
 	.Description
 	Lists all ServiceSets from your StoreOnce system(s).
-	Outputs: ArrayIP,SSID,Name,Alias,OverallHealth,SerialNumber,Capacity(GB).Free(GB),UserData(GB),DiskData(GB)
 	
 	.Example
 	Get-SOSIDs

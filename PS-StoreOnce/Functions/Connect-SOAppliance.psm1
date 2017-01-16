@@ -19,7 +19,7 @@ function Connect-SOAppliance {
     Connect to a StoreOnce Appliance 
     
     .DESCRIPTION
-    Connect to a StoreOnce Appliance and generate a connection object with Servername, Token etc
+    Connect to a StoreOnce Appliance and generate a connection object with Servername, Token etc.
     
     .PARAMETER Server
     StoreOnce Appliance to connect to

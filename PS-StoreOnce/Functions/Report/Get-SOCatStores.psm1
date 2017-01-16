@@ -5,7 +5,6 @@
 
     .Description
     Lists all Catalyst Stores from your StoreOnce system(s).
-    Outputs: ArrayIP,SSID,Name,ID,SizeOnDisk(GB),UserDataStored(GB),DedupeRatio
 
     .Example
     Get-SOCatStores
