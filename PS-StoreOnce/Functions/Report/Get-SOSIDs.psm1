@@ -5,31 +5,26 @@
 
 	.Description
 	Lists all ServiceSets from your StoreOnce system(s).
-	Outputs: ArrayIP,SSID,Name,Alias,OverallHealth,SerialNumber,Capacity(GB).Free(GB),UserData(GB),DiskData(GB)
 	
-	.Parameter D2DIPs
-	IP Address of your StoreOnce system(s).
-
 	.Example
-	Get-SOSIDs -D2DIPs 192.168.2.1, 192.168.2.2
+	Get-SOSIDs
 
 #Requires PS -Version 4.0
 #>
 function Get-SOSIDs {
 	[CmdletBinding()]
 	param (
-		[parameter(Mandatory=$true, Position=0)]
-			$D2DIPs
+
 	)
 	Process {
-		if ($SOCred -eq $null) {Write-Error "No Credential Set! Use 'set-SOCredentials'" -Category ConnectionError; Return}
+		if (!$Global:SOConnections) {throw "No StoreOnce Appliance(s) connected! Use 'Connect-SOAppliance'"}
 		$SOSIDs =  @()
 		
-		ForEach ($D2DIP in $D2DIPs) {
-			if (Test-IP -IP $D2DIP) {
-				$SIDCall = @{uri = "https://$D2DIP/storeonceservices/cluster/servicesets/";
+		ForEach ($SOConnection in $($Global:SOConnections)) {
+			if (Test-IP -IP $($SOConnection.Server)) {
+				$SIDCall = @{uri = "https://$($SOConnection.Server)/storeonceservices/cluster/servicesets/";
 							Method = 'GET';
-							Headers = @{Authorization = 'Basic ' + $SOCred;
+							Headers = @{Authorization = 'Basic ' + $($SOConnection.EncodedPassword);
 										Accept = 'text/xml'
 							} 
 						} 
@@ -49,7 +44,8 @@ function Get-SOSIDs {
 				
 				for ($i = 0; $i -lt $SIDCount; $i++ ){		
 					$row = [PSCustomObject] @{
-						ArrayIP = $D2DIP
+						System = $($SOConnection.Server)
+						SIDCount = [String] $SIDCount
 						SSID = $SSID[$i]
 						Name = $Name[$i]
 						Alias = $Alias[$i]

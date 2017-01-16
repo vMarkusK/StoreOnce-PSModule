@@ -5,57 +5,65 @@ SHORT DESCRIPTION
         PS-StoreOnce allows you to work with the HPE StoreOnce API through PowerShell functions.
 
 LONG DESCRIPTION
-        StoreOnce lavarages the HPE StoreOnce API to run basic Commands.
+        PS-StoreOnce lavarages the HPE StoreOnce API to run basic Commands.
 
         The moduls is segmented in differenet topics:
 
         Global
-            * Set-SOCredentials
+                * Connect-SOAppliance
+                * Get-SOAppliance
 
         Report
-            * Get-SOSIDs
-            * Get-SONasShares
-            * Get-SOCatStores
-            * Get-SOCatClients
-            * Get-SOCatStoreAccess
+                * Get-SOSIDs
+                * Get-SONasShares
+                * Get-SOCatStores
+                * Get-SOCatClients
+                * Get-SOCatStoreAccess
         Create
-            * New-SOCatStore 
-            * New-SOCatClient 
+                * New-SOCatStore 
+                * New-SOCatClient
+        Remove
+                * Remove-SOCatStore 
         Config
-            * Set-SOCatStoreAccess 
+                * Set-SOCatStoreAccess 
 
 RUNNING  PS-StoreOnce
 
         There are several commands provided by the PS-StoreOnce module, those are:
         
-        Set-SOCredentials       –SOUser –SOPassword 
-                                [-TESTIP -ShowHash]
+        Set-SOCredentials       -Server -Username -Password
+                                [-Credential (Get-Credential)]
 
-        Get-SOSIDs              -D2DIPs
+        Get-SOSIDs              
 
-        Get-SOCatStores         -D2DIPs
+        Get-SOCatStores         
 
-        Get-SONasShares         -D2DIPs
+        Get-SONasShares         
 
-        Get-SOCatClients        -D2DIPs
+        Get-SOCatClients        
 
-        Get-SOCatStoreAccess    -D2DIP -CatStore
+        Get-SOCatStoreAccess    -Server -CatStore
 
-        New-SOCatStore          -D2DIP-SSID -SOCatStoreName 
+        New-SOCatStore          -Server -SSID -SOCatStoreName 
                                 [-SOCatStoreDesc -Timeout]
 
-        New-SOCatClient         -D2DIP-SSID -SOCatClientName 
-                                [-SOCatClientDesc -Timeout]
+        New-SOCatClient         -Server -SSID -SOCatClientName -SOCatClientPass 
+                                [-SOCatClientDesc -Timeout -SOCatClientCredential (Get-Credential)]
 
-        Set-SOCatStoreAccess    -D2DIP -SOCatClientName -SOCatStoreName -allowAccess
+        Set-SOCatStoreAccess    -Server -SOCatClientName -SOCatStoreName -allowAccess
 
-        To initialize the credentials for your StoreOnce System simple run:
+        Remove-SOCatStore       -Server -SSID -SOCatStoreName
+                                [-Timeout]
+        Remove-SOCatClient      -Server -SOCatClientName
+                                [-Timeout]
+
+        To initialize the connection to your StoreOnce System simple run:
         
-        PS C:\> Set-SOCredentials
+        PS C:\> Connect-SOAppliance -Server d2d01.lan.local -Credential (Get-Credential)
 
         And then all other commands:
 
-        PS C:\> Get-SOSIDs -D2DIPs 192.168.2.1, 192.168.2.2
+        PS C:\> Get-SOSIDs
         
 CONTRIBUTE
 

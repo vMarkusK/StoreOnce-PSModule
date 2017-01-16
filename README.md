@@ -42,70 +42,77 @@ Or contact me via any other channel...
 # Features
 [*Back to top*](#Title)
 
-## Set-SOCredentials
+## Connect-SOAppliance
 
-Creates a Base64 hash for further requests against your StoreOnce system(s).
-This should be the first Commandlet you use from this module.
+Connect to a StoreOnce Appliance and generate a connection object with Servername, Token etc.
 
-![Set-SOCredentials](/Media/Set-SOCredentials_Neu.png)
+![Connect-SOAppliance](/Media/Connect-SOAppliance.png)
+
+## Get-SOAppliance
+
+Lists all connected StoreOnce Appliannce(s).
+
+![Get-SOAppliance](/Media/Get-SOAppliance.png)
 
 ## Get-SOSIDs
 
 Lists all ServiceSets from your StoreOnce system(s).
 
-Outputs: ArrayIP,SSID,Name,Alias,OverallHealth,SerialNumber,Capacity(GB).Free(GB),UserData(GB),DiskData(GB)
-
-![Get-SOSIDs](/Media/Get-SOSIDs_Neu.png)
+![Get-SOSIDs](/Media/Get-SOSIDs.png)
 
 ## Get-SOCatStores
 
 Lists all Catalyst Stores from your StoreOnce system(s).
 
-Outputs: ArrayIP,SSID,Name,ID,Status,Health,SizeOnDisk(GB),UserDataStored(GB),DedupeRatio
-
-![Get-SOCatStores](/Media/Get-SOCatStores_Neu.png)
+![Get-SOCatStores](/Media/Get-SOCatStores.png)
 
 ## Get-SONasShares
 
 Lists all NAS Stores from your StoreOnce system(s).
 
-Outputs: ArrayIP,SSID,Name,ID,AccessProtocol,SizeOnDisk(GB),UserDataStored(GB),DedupeRatio
-
-![Get-SONasShares](/Media/Get-SONasShares_Neu.png)
+![Get-SONasShares](/Media/Get-SONasShares.png)
 
 ## Get-SOCatClients
 
 Lists all Catalyst Clients from your StoreOnce system(s).
 
-Outputs: ArrayIP,SSID,Name,ID,Description,canCreateStores,canSetServerProperties,canManageClientPermissions
-
-![Get-SOCatClients](/Media/Get-SOCatClients_Neu.png)
+![Get-SOCatClients](/Media/Get-SOCatClients.png)
 
 ## Get-SOCatStoreAccess
 
 Lists Clients with Access Permissions of a Catalyst Store.
 
-Outputs: Client,allowAccess
-
-![Get-SOCatStoreAccess](/Media/Get-SOCatStoreAccess_Neu.png)
+![Get-SOCatStoreAccess](/Media/Get-SOCatStoreAccess.png)
 
 ## New-SOCatStore
 
 Creates a single StoreOnce Catalyst store with default options on a given Service Set on your StoreOnce system.
 
-![New-SOCatStore](/Media/New-SOCatStore_Neu.png)
+![New-SOCatStore](/Media/New-SOCatStore.png)
 
 ## New-SOCatClient
 
 Creates a StoreOnce Catalyst Client on all Service Sets on your StoreOnce system.
 
-![New-SOCatClient](/Media/New-SOCatClient_Neu.png)
+![New-SOCatClient](/Media/New-SOCatClient.png)
 
 ## Set-SOCatStoreAccess
 
 Permit or deny Client access to a StoreOnce Catalyst Store.
 
-![Set-SOCatStoreAccess](/Media/Set-SOCatStoreAccess_Neu.png)
+![Set-SOCatStoreAccess](/Media/Set-SOCatStoreAccess.png)
+
+## Remove-SOCatStore
+
+Remove a single StoreOnce Catalyst store on a given Service Set on your StoreOnce system.
+
+![Remove-SOCatStore](/Media/Remove-SOCatStore.png)
+
+## Remove-SOCatClient
+
+Remove a single StoreOnce Catalyst store on a given Service Set on your StoreOnce system.
+
+![Remove-SOCatClient](/Media/Remove-SOCatClient.png)
 
 <a name="Enhancements">
 # Enhancements

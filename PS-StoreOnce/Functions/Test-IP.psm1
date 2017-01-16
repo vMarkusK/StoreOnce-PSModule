@@ -1,10 +1,10 @@
 #region: Test-IP
 <# 
 	.Synopsis
-	Tests IP Cennectivity on given port
+	Tests IP Connectivity on given port
 
 	.Description
-    Tests IP Cennectivity on given port.
+    Tests IP Connectivity on given port.
     Test returns $True or throws an error.
 	
 	.Parameter IP
