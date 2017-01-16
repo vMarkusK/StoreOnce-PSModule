@@ -40,15 +40,15 @@ RUNNING  PS-StoreOnce
 
         Get-SOCatClients        
 
-        Get-SOCatStoreAccess    -D2DIP -CatStore
+        Get-SOCatStoreAccess    -Server -CatStore
 
-        New-SOCatStore          -D2DIP-SSID -SOCatStoreName 
+        New-SOCatStore          -Server -SSID -SOCatStoreName 
                                 [-SOCatStoreDesc -Timeout]
 
-        New-SOCatClient         -D2DIP-SSID -SOCatClientName 
+        New-SOCatClient         -Server -SSID -SOCatClientName 
                                 [-SOCatClientDesc -Timeout]
 
-        Set-SOCatStoreAccess    -D2DIP -SOCatClientName -SOCatStoreName -allowAccess
+        Set-SOCatStoreAccess    -Server -SOCatClientName -SOCatStoreName -allowAccess
 
         To initialize the connection to your StoreOnce System simple run:
         

@@ -77,3 +77,14 @@ Describe "Get-SOCatClients Tests" {
     }
 
 }
+
+Describe "Get-SOCatStoreAccess Tests" {
+
+    It "Client is correct" {
+        (Get-SOCatStoreAccess -Server 192.168.130.129 -CatStore myNewStore).Client | Should Be "myNewClient"
+    }
+    It "allowAccess is correct" {
+        (Get-SOCatStoreAccess -Server 192.168.130.129 -CatStore myNewStore).allowAccess | Should Be "true"
+    }
+
+}
