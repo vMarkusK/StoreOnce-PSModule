@@ -6,8 +6,8 @@
 	.Description
 	Permits or denys Client access to a StoreOnce Catalyst Store.
 	
-	.Parameter D2DIP
-	IP Address of your StoreOnce system.
+	.Parameter Server
+    IP Address oder DNS Name of your StoreOnce system like defined via Connect-SOAppliance (check Get-SOConnections).
 
 	.Parameter SOCatClientName
 	Name for the Client on your StoreOnce system.
@@ -19,7 +19,7 @@
 	True ore False
 
 	.Example
-	Set-SOCatStoreAccess -D2DIP 192.168.2.1 -SOCatClientName MyNewClient -SOCatStoreName MyNewStore -allowAccess:$true
+	Set-SOCatStoreAccess -Server 192.168.2.1 -SOCatClientName MyNewClient -SOCatStoreName MyNewStore -allowAccess:$true
 
 #Requires PS -Version 4.0
 #>
@@ -27,7 +27,7 @@ function Set-SOCatStoreAccess {
 	[CmdletBinding()]
 	param (
 		[parameter(Mandatory=$true, Position=0)]
-			[String]$D2DIP,
+			[String]$Server,
 		[parameter(Mandatory=$true, Position=1)]
 			[String]$SOCatClientName,
 		[parameter(Mandatory=$true, Position=2)]
@@ -37,9 +37,13 @@ function Set-SOCatStoreAccess {
 			
 	)
 	Process {
-		if ($SOCred -eq $null) {Write-Error "No System Credential Set! Use 'Set-SOCredentials'." -Category ConnectionError; Return}
+		if (!$Global:SOConnections) {throw "No StoreOnce Appliance(s) connected! Use 'Connect-SOAppliance'"}
+        if ($Server.count -gt 1) {throw "This Command only Supports one D2D System."}
+        $Connection = $Global:SOConnections | Where {$_.Server -eq $Server}
+		if (!$Connection) {throw "No D2D System found, check Get-SOConnections."}
+        if ($Connection.count -gt 1) {throw "This Command only Supports one D2D System. Multiple Matches for $Server found..."}
 
-        if (Test-IP -IP $D2DIP) {
+        if (Test-IP -IP $($Connection.Server)) {
             if (!($SOCaStore = (Get-SOCatStores -D2DIPs $D2DIP | where {$_.Name -eq $SOCatStoreName}))) {Write-Error "Store $SOCatStoreName does not exists."; Return}
             if (!($SOCatClient = (Get-SOCatClients -D2DIPs $D2DIP | where {$_.Name -eq $SOCatClientName -and $_.SSID -eq $($SOCaStore).SSID}))) {Write-Error "Client $SOCatClientName does not exists."; Return}
             

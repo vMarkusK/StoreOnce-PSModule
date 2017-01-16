@@ -67,15 +67,15 @@ function New-SOCatClient {
         
         }  
 
-        if (Test-IP -IP $($SOConnections.Server)) {
-            if (Get-SOCatClients | where {$_.Name -eq $SOCatClientName -and $_.System -eq $($SOConnections.Server)}) {Throw "Client $SOCatClientName already Exists."}
+        if (Test-IP -IP $($Connection.Server)) {
+            if (Get-SOCatClients | where {$_.Name -eq $SOCatClientName -and $_.System -eq $($Connection.Server)}) {Throw "Client $SOCatClientName already Exists."}
 
-            [Array]$IDs = (Get-SOSIDs | where {$_.System -eq $($SOConnections.Server)}).SSID
+            [Array]$IDs = (Get-SOSIDs | where {$_.System -eq $($Connection.Server)}).SSID
 
             for ($i = 1; $i -le $IDs.Count; $i++ ){
-                $ClientCall = @{uri = "https://$($SOConnections.Server)/storeonceservices/cluster/servicesets/$i/services/cat/configs/clients/";
+                $ClientCall = @{uri = "https://$($Connection.Server)/storeonceservices/cluster/servicesets/$i/services/cat/configs/clients/";
                                 Method = 'POST';
-                                Headers = @{Authorization = 'Basic ' + $($SOConnections.EncodedPassword);
+                                Headers = @{Authorization = 'Basic ' + $($Connection.EncodedPassword);
                                             Accept = 'text/xml';
                                             'Content-Type' = 'application/x-www-form-urlencoded'
                                 }
@@ -92,14 +92,14 @@ function New-SOCatClient {
             }
             
             $i = 0
-            while(!(Get-SOCatClients | where {$_.Name -eq $SOCatClientName -and $_.System -eq $($SOConnections.Server)})){
+            while(!(Get-SOCatClients | where {$_.Name -eq $SOCatClientName -and $_.System -eq $($Connection.Server)})){
                 $i++
                 Start-Sleep 1
             if($i -gt $Timeout) { Write-Error "Creating Client Failed."; break}
                 Write-Progress -Activity "Creating Client" -Status "Wait for Client..."
             }
         }
-		Return (Get-SOCatClients | where {$_.Name -eq $SOCatClientName -and $_.System -eq $($SOConnections.Server)} | ft * -AutoSize)
+		Return (Get-SOCatClients | where {$_.Name -eq $SOCatClientName -and $_.System -eq $($Connection.Server)} | ft * -AutoSize)
 		
 	}
 }

@@ -72,7 +72,7 @@ function New-SOCatStore {
             $StoreResponse = Invoke-RestMethod @StoreCall
             
             $i = 0
-            while(!(Get-SOCatStores | where {$_.Name -eq $SOCatStoreName -and $_.System -eq $($SOConnections.Server) -and $_.Status -eq "Online"})){
+            while(!(Get-SOCatStores | where {$_.Name -eq $SOCatStoreName -and $_.System -eq $($Connection.Server) -and $_.Status -eq "Online"})){
                 $i++
                 Start-Sleep 1
             if($i -gt $Timeout) { Write-Error "Creating Store Failed."; break}
@@ -80,7 +80,7 @@ function New-SOCatStore {
             }
         }
 
-		Return (Get-SOCatStores | where {$_.Name -eq $SOCatStoreName -and $_.System -eq $($SOConnections.Server)} | ft * -AutoSize)
+		Return (Get-SOCatStores | where {$_.Name -eq $SOCatStoreName -and $_.System -eq $($Connection.Server)} | ft * -AutoSize)
 	}
 }
 #endregion
