@@ -118,6 +118,11 @@ Remove a single StoreOnce Catalyst store on a given Service Set on your StoreOnc
 # Enhancements
 [*Back to top*](#Title)
 
+Version 2.0
++ New: New Connection process
++ New: Remove-SOCatClient
++ New: Remove-SOCatStore
+
 Version 1.1
 + New: IP Connection Test before REST Calls
 
