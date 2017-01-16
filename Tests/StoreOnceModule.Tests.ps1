@@ -130,7 +130,6 @@ Describe "New-SOCatStore Tests" {
         $error.Count | should be 0
     }
 
-
 }
 
 Describe "Remove-SOCatStore Tests" {
@@ -143,7 +142,25 @@ Describe "Remove-SOCatStore Tests" {
         $error.Count | should be 0
     }
 
+}
+
+Describe "New-SOCatClient Tests" {
+
+    <#
+    It "Create duplicate Client" {
+        (New-SOCatClient -Server $SOAppliance -SOCatClientName myTestClient -SOCatClientPass myTestClientpass!! ) | Should throw
+    }
+    #>
+    It "Create new Client" {
+        (New-SOCatClient -Server $SOAppliance -SOCatClientName myPesterClient -SOCatClientPass myPesterClientPas!!)
+        (Get-SOCatClients | where {$_.Name -eq "myPesterClient" -and $_.System -eq $SOAppliance} ).Name | Should be "myPesterClient"
+    }
+    It "Check errors" {
+        $error.Count | should be 0
+    }
 
 }
+
+
 
 

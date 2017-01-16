@@ -47,8 +47,8 @@ RUNNING  PS-StoreOnce
         New-SOCatStore          -Server -SSID -SOCatStoreName 
                                 [-SOCatStoreDesc -Timeout]
 
-        New-SOCatClient         -Server -SSID -SOCatClientName 
-                                [-SOCatClientDesc -Timeout]
+        New-SOCatClient         -Server -SSID -SOCatClientName -SOCatClientPass 
+                                [-SOCatClientDesc -Timeout -SOCatClientCredential (Get-Credential)]
 
         Set-SOCatStoreAccess    -Server -SOCatClientName -SOCatStoreName -allowAccess
 
