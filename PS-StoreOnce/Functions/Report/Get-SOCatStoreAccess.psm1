@@ -31,7 +31,7 @@ function Get-SOCatStoreAccess {
         if ($Server.count -gt 1) {throw "This Command only Supports one D2D System."}
         $Connection = $Global:SOConnections | Where {$_.Server -eq $Server}
 		if (!$Connection) {throw "No D2D System found, check Get-SOConnections."}
-        if ($Connection.count -gt 1) {throw "This Command only Supports one D2D System."}
+        if ($Connection.count -gt 1) {throw "This Command only Supports one D2D System. Multiple Matches for $Server found..."}
 		$SOCatStoreAccess =  @() 
 		
         if (Test-IP -IP $($SOConnections.Server)) {

@@ -122,7 +122,7 @@ Describe "New-SOCatStore Tests" {
         (New-SOCatStore -Server $SOAppliance -SSID 1 -SOCatStoreName MyNewStore ) | Should throw
     }
     #>
-    It "Create new Store" {
+    It "Create new Catalyst Store" {
         (New-SOCatStore -Server $SOAppliance -SSID 1 -SOCatStoreName myPesterStore)
         (Get-SOCatStores | where {$_.Name -eq "myPesterStore" -and $_.System -eq $SOAppliance}).Status | Should be "Online"
     }
@@ -132,3 +132,18 @@ Describe "New-SOCatStore Tests" {
 
 
 }
+
+Describe "Remove-SOCatStore Tests" {
+
+    It "Remove Catalyst Store" {
+        (Remove-SOCatStore -Server $SOAppliance -SSID 1 -SOCatStoreName myPesterStore)
+        (Get-SOCatStores | where {$_.Name -eq "myPesterStore" -and $_.System -eq $SOAppliance}) | Should not be "Online"
+    }
+    It "Check errors" {
+        $error.Count | should be 0
+    }
+
+
+}
+
+

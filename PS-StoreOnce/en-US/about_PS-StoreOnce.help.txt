@@ -10,20 +10,22 @@ LONG DESCRIPTION
         The moduls is segmented in differenet topics:
 
         Global
-            * Connect-SOAppliance
-            * Get-SOAppliance
+                * Connect-SOAppliance
+                * Get-SOAppliance
 
         Report
-            * Get-SOSIDs
-            * Get-SONasShares
-            * Get-SOCatStores
-            * Get-SOCatClients
-            * Get-SOCatStoreAccess
+                * Get-SOSIDs
+                * Get-SONasShares
+                * Get-SOCatStores
+                * Get-SOCatClients
+                * Get-SOCatStoreAccess
         Create
-            * New-SOCatStore 
-            * New-SOCatClient 
+                * New-SOCatStore 
+                * New-SOCatClient
+        Remove
+                * Remove-SOCatStore 
         Config
-            * Set-SOCatStoreAccess 
+                * Set-SOCatStoreAccess 
 
 RUNNING  PS-StoreOnce
 
@@ -49,6 +51,9 @@ RUNNING  PS-StoreOnce
                                 [-SOCatClientDesc -Timeout]
 
         Set-SOCatStoreAccess    -Server -SOCatClientName -SOCatStoreName -allowAccess
+
+        Remove-SOCatStore       -Server -SSID -SOCatStoreName
+                                [-Timeout]]
 
         To initialize the connection to your StoreOnce System simple run:
         
