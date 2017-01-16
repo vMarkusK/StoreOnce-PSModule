@@ -54,6 +54,8 @@ RUNNING  PS-StoreOnce
 
         Remove-SOCatStore       -Server -SSID -SOCatStoreName
                                 [-Timeout]]
+        Remove-SOCatClient      -Server -SOCatClientName
+                                [-Timeout]]
 
         To initialize the connection to your StoreOnce System simple run:
         

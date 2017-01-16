@@ -48,11 +48,11 @@ function New-SOCatStore {
 		if (!$Connection) {throw "No D2D System found, check Get-SOConnections."}
         if ($Connection.count -gt 1) {throw "This Command only Supports one D2D System. Multiple Matches for $Server found..."}
 
-        if (Test-IP -IP $($SOConnections.Server)) {
-            if (Get-SOCatStores | where {$_.Name -eq $SOCatStoreName -and $_.System -eq $($SOConnections.Server)}) {throw "Store $SOCatStoreName already Exists."}
-            $StoreCall = @{uri = "https://$($SOConnections.Server)/storeonceservices/cluster/servicesets/$SSID/services/cat/stores/";
+        if (Test-IP -IP $($Connection.Server)) {
+            if (Get-SOCatStores | where {$_.Name -eq $SOCatStoreName -and $_.System -eq $($Connection.Server)}) {throw "Store $SOCatStoreName already Exists."}
+            $StoreCall = @{uri = "https://$($Connection.Server)/storeonceservices/cluster/servicesets/$SSID/services/cat/stores/";
                             Method = 'POST';
-                            Headers = @{Authorization = 'Basic ' + $($SOConnections.EncodedPassword);
+                            Headers = @{Authorization = 'Basic ' + $($Connection.EncodedPassword);
                                         Accept = 'text/xml';
                                         'Content-Type' = 'application/x-www-form-urlencoded'
                             }

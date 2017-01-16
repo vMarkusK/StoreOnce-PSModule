@@ -161,6 +161,19 @@ Describe "New-SOCatClient Tests" {
 
 }
 
+describe "Remove-SOCatClient Tests" {
+
+
+    It "Remove Client" {
+        (Remove-SOCatClient -Server $SOAppliance -SOCatClientName myPesterClient)
+        (Get-SOCatClients | where {$_.Name -eq "myPesterClient" -and $_.System -eq $SOAppliance} ).Name | Should not be "myPesterClient"
+    }
+    It "Check errors" {
+        $error.Count | should be 0
+    }
+
+}
+
 
 
 
