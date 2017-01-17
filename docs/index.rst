@@ -7,18 +7,19 @@ Welcome to the Rubrik PowerShell Module
 .. image:: http://readthedocs.org/projects/storeonce-psmodule/badge/?version=latest
    :target: http://storeonce-psmodule.readthedocs.io/en/latest/?badge=latest
 
-This module leverages the HPE StoreOnce REST API with PowerShell. This first cmdlets will be for reporting purposes and after that some basic administrative cmdlets should be added.
+This module PS-StoreOnce allows you to work with your HPE StoreOnce API through PowerShell functions.
 
 .. _available on GitHub: https://github.com/rubrikinc/PowerShell-Module
 
-  :maxdepth: 2
-   :hidden:
-   :caption: User Documentation
- 
-   requirements
-   installation
-   getting_started
-   support
-   contribution
-   licensing  
-   faq
+The main documentation for the site is organized into a couple sections:
+
+* :ref:`feature-docs`
+
+.. _feature-docs:
+
+.. toctree::
+   :maxdepth: 2
+   :glob:
+   :caption: Feature Documentation
+
+   features/*
