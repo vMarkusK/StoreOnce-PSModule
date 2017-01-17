@@ -10,3 +10,15 @@ Welcome to the Rubrik PowerShell Module
 This module leverages the HPE StoreOnce REST API with PowerShell. This first cmdlets will be for reporting purposes and after that some basic administrative cmdlets should be added.
 
 .. _available on GitHub: https://github.com/rubrikinc/PowerShell-Module
+
+  :maxdepth: 2
+   :hidden:
+   :caption: User Documentation
+ 
+   requirements
+   installation
+   getting_started
+   support
+   contribution
+   licensing  
+   faq
