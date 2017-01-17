@@ -15,14 +15,17 @@ HPE StoreOnce PowerShell Module
 # About
 [*Back to top*](#Title)
 
-Project Owner: Markus Kraus
+Project Owner: Markus Kraus [@vMarkus_K](https://twitter.com/vMarkus_K)
 
-Project WebSite: http://mycloudrevolution.com/projekte/storeonce-powershell-module/
+Project WebSite: [mycloudrevolution.com](http://mycloudrevolution.com/projekte/storeonce-powershell-module/)
+
+Project Documentation: [Read the Docs](http://storeonce-psmodule.readthedocs.io/en/latest/index.html)
 
 Project Details:
 
 This module leverages the HPE StoreOnce REST API with PowerShell.
 This first cmdlets will be for reporting purposes and after that some basic administrative cmdlets should be added.
+
 
 + Create Stores
 + Change Permissions
