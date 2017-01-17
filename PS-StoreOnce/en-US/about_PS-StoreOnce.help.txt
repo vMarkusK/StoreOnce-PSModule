@@ -31,9 +31,10 @@ RUNNING  PS-StoreOnce
 
         There are several commands provided by the PS-StoreOnce module, those are:
         
-        Set-SOCredentials       -Server -Username -Password
+        Connect-SOAppliance     -Server -Username -Password
                                 [-Credential (Get-Credential)]
-
+        Get-SOAppliance 
+                                
         Get-SOSIDs              
 
         Get-SOCatStores         
