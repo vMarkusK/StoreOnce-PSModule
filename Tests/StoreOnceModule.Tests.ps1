@@ -6,10 +6,10 @@
 $SOAppliance = $Parameters.Get_Item("SOAppliance")
 $SOUser = $Parameters.Get_Item("SOUser")
 $SOPass = $Parameters.Get_Item("SOPass")
-$error.Clear()
 
 Describe "Module Tests" {
 
+    $error.Clear()
     Remove-Module PS-StoreOnce -ErrorAction SilentlyContinue
     It "Importing PS-StoreOnce Module" {
         Import-Module ./PS-StoreOnce/PS-StoreOnce.psd1
@@ -23,6 +23,7 @@ Describe "Module Tests" {
 
 Describe "Connect-SOAppliance Tests" {
 
+    $error.Clear()
     Clear-Variable SOConnections -Scope Global -ErrorAction SilentlyContinue
     $connection = Connect-SOAppliance -Server $SOAppliance -Username $SOUser -Password $SOPass
     It "Connection exists" {
@@ -36,6 +37,7 @@ Describe "Connect-SOAppliance Tests" {
 
 Describe "Get-SOAppliance Tests" {
 
+    $error.Clear()
     It "Variable is correct" {
         (Get-SOAppliance).Server | Should Be $SOAppliance
     }
@@ -47,6 +49,7 @@ Describe "Get-SOAppliance Tests" {
 
 Describe "Get-SOSIDs Tests" {
 
+    $error.Clear()
     It "System is correct" {
         (Get-SOSIDs).System | Should Be $SOAppliance
     }
@@ -61,6 +64,7 @@ Describe "Get-SOSIDs Tests" {
 
 Describe "Get-SONasShares Tests" {
 
+    $error.Clear()
     It "System is correct" {
         (Get-SONasShares).System | Should Be $SOAppliance
     }
@@ -75,6 +79,7 @@ Describe "Get-SONasShares Tests" {
 
 Describe "Get-SOCatStores Tests" {
 
+    $error.Clear()
     It "System is correct" {
         (Get-SOCatStores).System | Should Be $SOAppliance
     }
@@ -89,6 +94,7 @@ Describe "Get-SOCatStores Tests" {
 
 Describe "Get-SOCatClients Tests" {
 
+    $error.Clear()
     It "System is correct" {
         (Get-SOCatClients).System | Should Be $SOAppliance
     }
@@ -103,6 +109,7 @@ Describe "Get-SOCatClients Tests" {
 
 Describe "Get-SOCatStoreAccess Tests" {
 
+    $error.Clear()
     It "Client is correct" {
         (Get-SOCatStoreAccess -Server $SOAppliance -CatStore myNewStore).Client | Should Be "myNewClient"
     }
@@ -117,6 +124,7 @@ Describe "Get-SOCatStoreAccess Tests" {
 
 Describe "New-SOCatStore Tests" {
 
+    $error.Clear()
     <#
     It "Create duplicate Store" {
         (New-SOCatStore -Server $SOAppliance -SSID 1 -SOCatStoreName MyNewStore ) | Should throw
@@ -134,6 +142,7 @@ Describe "New-SOCatStore Tests" {
 
 Describe "New-SOCatClient Tests" {
 
+    $error.Clear()
     <#
     It "Create duplicate Client" {
         (New-SOCatClient -Server $SOAppliance -SOCatClientName myTestClient -SOCatClientPass myTestClientpass!! ) | Should throw
@@ -151,6 +160,7 @@ Describe "New-SOCatClient Tests" {
 
 Describe "Set-SOCatStoreAccess Tests" {
 
+    $error.Clear()
     It "Set Access" {
         (Set-SOCatStoreAccess -Server $SOAppliance -SOCatClientName myPesterClient -SOCatStoreName myPesterStore -allowAccess:$true)
         (Get-SOCatStoreAccess -Server $SOAppliance -CatStore "myPesterStore").Client | Should be "myPesterClient"
@@ -167,6 +177,7 @@ Describe "Set-SOCatStoreAccess Tests" {
 
 Describe "Remove-SOCatStore Tests" {
 
+    $error.Clear()
     It "Remove Catalyst Store" {
         (Remove-SOCatStore -Server $SOAppliance -SSID 1 -SOCatStoreName myPesterStore)
         (Get-SOCatStores | where {$_.Name -eq "myPesterStore" -and $_.System -eq $SOAppliance}) | Should not be "Online"
@@ -179,6 +190,7 @@ Describe "Remove-SOCatStore Tests" {
 
 Describe "Remove-SOCatClient Tests" {
 
+    $error.Clear()
     It "Remove Client" {
         (Remove-SOCatClient -Server $SOAppliance -SOCatClientName myPesterClient)
         (Get-SOCatClients | where {$_.Name -eq "myPesterClient" -and $_.System -eq $SOAppliance} ).Name | Should not be "myPesterClient"
