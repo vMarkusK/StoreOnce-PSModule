@@ -3,7 +3,7 @@
 #
 # Generiert von: Markus Kraus
 #
-# Generiert am: 16.01.2017
+# Generiert am: 17.01.2017
 #
 
 @{
@@ -12,7 +12,7 @@
 # RootModule = ''
 
 # Die Versionsnummer dieses Moduls
-ModuleVersion = '2.0.0'
+ModuleVersion = '2.0.1'
 
 # ID zur eindeutigen Kennzeichnung dieses Moduls
 GUID = 'dfe6dfcc-5971-41b9-aa49-f2b5db87f3db'
