@@ -10,7 +10,7 @@ Welcome to my StoreOnce PowerShell Module
 This module PS-StoreOnce allows you to work with your HPE StoreOnce API through PowerShell functions.
 Project Page: http://mycloudrevolution.com/projekte/storeonce-powershell-module/
 
-.. _available on GitHub: https://github.com/rubrikinc/PowerShell-Module
+.. _available on GitHub: https://github.com/mycloudrevolution/StoreOnce-PSModule/
 
 The main documentation for the site is organized into a couple sections:
 
