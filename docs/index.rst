@@ -1,4 +1,4 @@
-Welcome to the Rubrik PowerShell Module
+Welcome to my StoreOnce PowerShell Module
 ========================
 
 .. image:: http://mycloudrevolution.com/wp-content/uploads/2017/01/PS-StoreOnce.png
