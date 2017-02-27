@@ -1,4 +1,4 @@
-#region: Workaround for SelfSigned Cert
+#region: Workaround for SelfSigned Cert an force TLS 1.2
 add-type @"
     using System.Net;
     using System.Security.Cryptography.X509Certificates;
@@ -11,6 +11,7 @@ add-type @"
     }
 "@
 [System.Net.ServicePointManager]::CertificatePolicy = New-Object TrustAllCertsPolicy
+[System.Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
 #endregion
 
 function Connect-SOAppliance {
