@@ -121,6 +121,9 @@ Remove a single StoreOnce Catalyst store on a given Service Set on your StoreOnc
 # Enhancements
 [*Back to top*](#Title)
 
+Version 2.1
++ Enhanced: force TLS 1.2 Connection
+
 Version 2.0
 + New: New Connection process
 + New: Remove-SOCatClient
