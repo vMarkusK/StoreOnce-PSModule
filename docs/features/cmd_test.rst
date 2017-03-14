@@ -14,24 +14,24 @@ SYNTAX
     Test-IP [-IP] <string> [[-Port] <int>]  [<CommonParameters>]
     
     
-PARAMETER
+PARAMETERS
     -IP <string>
     
     -Port <int>
     
     <CommonParameters>
-        Dieses Cmdlet unterstützt folgende allgemeine Parameter: "Verbose", "Debug",
-        "ErrorAction", "ErrorVariable", "WarningAction", "WarningVariable",
-        "OutBuffer", "PipelineVariable" und "OutVariable". Weitere Informationen finden Sie unter 
-        "about_CommonParameters" (http://go.microsoft.com/fwlink/?LinkID=113216). 
+        This cmdlet supports the common parameters: Verbose, Debug,
+        ErrorAction, ErrorVariable, WarningAction, WarningVariable,
+        OutBuffer, PipelineVariable, and OutVariable. For more information, see 
+        about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216). 
     
 
-ALIASE
-    Keine
+ALIASES
+    None
     
 
-HINWEISE
-    Keine
+REMARKS
+    None
 
 
 

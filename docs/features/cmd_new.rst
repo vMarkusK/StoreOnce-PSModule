@@ -11,12 +11,14 @@ NAME
     New-SOCatClient
     
 SYNTAX
-    New-SOCatClient [-Server] <string> [-SOCatClientName] <string> [-SOCatClientPass] <string> [[-SOCatClientDesc] <string>] [[-Timeout] <int>]  [<CommonParameters>]
+    New-SOCatClient [-Server] <string> [-SOCatClientName] <string> [-SOCatClientPass] <string> [[-SOCatClientDesc] <string>] [[-Timeout] 
+    <int>]  [<CommonParameters>]
     
-    New-SOCatClient [-Server] <string> [-SOCatClientCredential] <pscredential> [[-SOCatClientDesc] <string>] [[-Timeout] <int>]  [<CommonParameters>]
+    New-SOCatClient [-Server] <string> [-SOCatClientCredential] <pscredential> [[-SOCatClientDesc] <string>] [[-Timeout] <int>]  
+    [<CommonParameters>]
     
     
-PARAMETER
+PARAMETERS
     -SOCatClientCredential <pscredential>
     
     -SOCatClientDesc <string>
@@ -30,18 +32,18 @@ PARAMETER
     -Timeout <int>
     
     <CommonParameters>
-        Dieses Cmdlet unterstützt folgende allgemeine Parameter: "Verbose", "Debug",
-        "ErrorAction", "ErrorVariable", "WarningAction", "WarningVariable",
-        "OutBuffer", "PipelineVariable" und "OutVariable". Weitere Informationen finden Sie unter 
-        "about_CommonParameters" (http://go.microsoft.com/fwlink/?LinkID=113216). 
+        This cmdlet supports the common parameters: Verbose, Debug,
+        ErrorAction, ErrorVariable, WarningAction, WarningVariable,
+        OutBuffer, PipelineVariable, and OutVariable. For more information, see 
+        about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216). 
     
 
-ALIASE
-    Keine
+ALIASES
+    None
     
 
-HINWEISE
-    Keine
+REMARKS
+    None
 
 
 New-SOCatStore
@@ -51,10 +53,11 @@ NAME
     New-SOCatStore
     
 SYNTAX
-    New-SOCatStore [-Server] <string> [-SSID] <string> [-SOCatStoreName] <string> [[-SOCatStoreDesc] <string>] [[-Timeout] <int>]  [<CommonParameters>]
+    New-SOCatStore [-Server] <string> [-SSID] <string> [-SOCatStoreName] <string> [[-SOCatStoreDesc] <string>] [[-Timeout] <int>]  
+    [<CommonParameters>]
     
     
-PARAMETER
+PARAMETERS
     -SOCatStoreDesc <string>
     
     -SOCatStoreName <string>
@@ -66,18 +69,18 @@ PARAMETER
     -Timeout <int>
     
     <CommonParameters>
-        Dieses Cmdlet unterstützt folgende allgemeine Parameter: "Verbose", "Debug",
-        "ErrorAction", "ErrorVariable", "WarningAction", "WarningVariable",
-        "OutBuffer", "PipelineVariable" und "OutVariable". Weitere Informationen finden Sie unter 
-        "about_CommonParameters" (http://go.microsoft.com/fwlink/?LinkID=113216). 
+        This cmdlet supports the common parameters: Verbose, Debug,
+        ErrorAction, ErrorVariable, WarningAction, WarningVariable,
+        OutBuffer, PipelineVariable, and OutVariable. For more information, see 
+        about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216). 
     
 
-ALIASE
-    Keine
+ALIASES
+    None
     
 
-HINWEISE
-    Keine
+REMARKS
+    None
 
 
 

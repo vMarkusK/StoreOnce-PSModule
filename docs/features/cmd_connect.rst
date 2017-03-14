@@ -10,7 +10,7 @@ Connect-SOAppliance
 NAME
     Connect-SOAppliance
     
-ÜBERSICHT
+SYNOPSIS
     Connect to a StoreOnce Appliance
     
     
@@ -20,11 +20,11 @@ SYNTAX
     Connect-SOAppliance -Server <String> -Credential <PSCredential> [-IgnoreCertRequirements] [<CommonParameters>]
     
     
-BESCHREIBUNG
+DESCRIPTION
     Connect to a StoreOnce Appliance and generate a connection object with Servername, Token etc.
     
 
-PARAMETER
+PARAMETERS
     -Server <String>
         StoreOnce Appliance to connect to
         
@@ -40,12 +40,12 @@ PARAMETER
     -IgnoreCertRequirements [<SwitchParameter>]
         
     <CommonParameters>
-        Dieses Cmdlet unterstützt folgende allgemeine Parameter: "Verbose", "Debug",
-        "ErrorAction", "ErrorVariable", "WarningAction", "WarningVariable",
-        "OutBuffer", "PipelineVariable" und "OutVariable". Weitere Informationen finden Sie unter 
-        "about_CommonParameters" (http://go.microsoft.com/fwlink/?LinkID=113216). 
+        This cmdlet supports the common parameters: Verbose, Debug,
+        ErrorAction, ErrorVariable, WarningAction, WarningVariable,
+        OutBuffer, PipelineVariable, and OutVariable. For more information, see 
+        about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216). 
     
-    -------------------------- BEISPIEL 1 --------------------------
+    -------------------------- EXAMPLE 1 --------------------------
     
     PS C:\>Connect-SOAppliance -Server d2d01.lan.local -Username TenantAdmin01 -Password P@ssword
     
@@ -54,7 +54,7 @@ PARAMETER
     
     
     
-    -------------------------- BEISPIEL 2 --------------------------
+    -------------------------- EXAMPLE 2 --------------------------
     
     PS C:\>Connect-SOAppliance -Server d2d01.lan.local -Credential (Get-Credential)
     
@@ -63,10 +63,10 @@ PARAMETER
     
     
     
-HINWEISE
-    Zum Aufrufen der Beispiele geben Sie Folgendes ein: "get-help Connect-SOAppliance -examples".
-    Weitere Informationen erhalten Sie mit folgendem Befehl: "get-help Connect-SOAppliance -detailed".
-    Technische Informationen erhalten Sie mit folgendem Befehl: "get-help Connect-SOAppliance -full".
+REMARKS
+    To see the examples, type: "get-help Connect-SOAppliance -examples".
+    For more information, type: "get-help Connect-SOAppliance -detailed".
+    For technical information, type: "get-help Connect-SOAppliance -full".
 
 
 

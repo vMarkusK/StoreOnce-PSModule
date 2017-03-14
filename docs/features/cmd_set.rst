@@ -11,10 +11,11 @@ NAME
     Set-SOCatStoreAccess
     
 SYNTAX
-    Set-SOCatStoreAccess [-Server] <string> [-SOCatClientName] <string> [-SOCatStoreName] <string> [-allowAccess] <bool>  [<CommonParameters>]
+    Set-SOCatStoreAccess [-Server] <string> [-SOCatClientName] <string> [-SOCatStoreName] <string> [-allowAccess] <bool>  
+    [<CommonParameters>]
     
     
-PARAMETER
+PARAMETERS
     -SOCatClientName <string>
     
     -SOCatStoreName <string>
@@ -24,18 +25,18 @@ PARAMETER
     -allowAccess <bool>
     
     <CommonParameters>
-        Dieses Cmdlet unterstützt folgende allgemeine Parameter: "Verbose", "Debug",
-        "ErrorAction", "ErrorVariable", "WarningAction", "WarningVariable",
-        "OutBuffer", "PipelineVariable" und "OutVariable". Weitere Informationen finden Sie unter 
-        "about_CommonParameters" (http://go.microsoft.com/fwlink/?LinkID=113216). 
+        This cmdlet supports the common parameters: Verbose, Debug,
+        ErrorAction, ErrorVariable, WarningAction, WarningVariable,
+        OutBuffer, PipelineVariable, and OutVariable. For more information, see 
+        about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216). 
     
 
-ALIASE
-    Keine
+ALIASES
+    None
     
 
-HINWEISE
-    Keine
+REMARKS
+    None
 
 
 

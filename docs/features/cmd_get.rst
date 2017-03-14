@@ -10,7 +10,7 @@ Get-SOAppliance
 NAME
     Get-SOAppliance
     
-ÜBERSICHT
+SYNOPSIS
     Lists all connected StoreOnce Appliannce(s).
     
     
@@ -18,18 +18,18 @@ SYNTAX
     Get-SOAppliance [<CommonParameters>]
     
     
-BESCHREIBUNG
+DESCRIPTION
     Lists all connected StoreOnce Appliannce(s).
     
 
-PARAMETER
+PARAMETERS
     <CommonParameters>
-        Dieses Cmdlet unterstützt folgende allgemeine Parameter: "Verbose", "Debug",
-        "ErrorAction", "ErrorVariable", "WarningAction", "WarningVariable",
-        "OutBuffer", "PipelineVariable" und "OutVariable". Weitere Informationen finden Sie unter 
-        "about_CommonParameters" (http://go.microsoft.com/fwlink/?LinkID=113216). 
+        This cmdlet supports the common parameters: Verbose, Debug,
+        ErrorAction, ErrorVariable, WarningAction, WarningVariable,
+        OutBuffer, PipelineVariable, and OutVariable. For more information, see 
+        about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216). 
     
-    -------------------------- BEISPIEL 1 --------------------------
+    -------------------------- EXAMPLE 1 --------------------------
     
     PS C:\>Get-SOAppliance
     
@@ -38,10 +38,10 @@ PARAMETER
     
     
     
-HINWEISE
-    Zum Aufrufen der Beispiele geben Sie Folgendes ein: "get-help Get-SOAppliance -examples".
-    Weitere Informationen erhalten Sie mit folgendem Befehl: "get-help Get-SOAppliance -detailed".
-    Technische Informationen erhalten Sie mit folgendem Befehl: "get-help Get-SOAppliance -full".
+REMARKS
+    To see the examples, type: "get-help Get-SOAppliance -examples".
+    For more information, type: "get-help Get-SOAppliance -detailed".
+    For technical information, type: "get-help Get-SOAppliance -full".
 
 
 Get-SOCatClients
@@ -55,9 +55,9 @@ Syntax                   : @{syntaxItem=System.Object[]}
 parameters               : @{parameter=System.Object[]}
 inputTypes               : @{inputType=}
 returnValues             : @{returnValue=}
-aliases                  : Keine
+aliases                  : None
                            
-remarks                  : Keine
+remarks                  : None
 alertSet                 : 
 description              : 
 examples                 : 
@@ -87,9 +87,9 @@ Syntax                   : @{syntaxItem=System.Object[]}
 parameters               : @{parameter=System.Object[]}
 inputTypes               : @{inputType=}
 returnValues             : @{returnValue=}
-aliases                  : Keine
+aliases                  : None
                            
-remarks                  : Keine
+remarks                  : None
 alertSet                 : 
 description              : 
 examples                 : 
@@ -119,9 +119,9 @@ Syntax                   : @{syntaxItem=System.Object[]}
 parameters               : @{parameter=System.Object[]}
 inputTypes               : @{inputType=}
 returnValues             : @{returnValue=}
-aliases                  : Keine
+aliases                  : None
                            
-remarks                  : Keine
+remarks                  : None
 alertSet                 : 
 description              : 
 examples                 : 
@@ -151,9 +151,9 @@ Syntax                   : @{syntaxItem=System.Object[]}
 parameters               : @{parameter=System.Object[]}
 inputTypes               : @{inputType=}
 returnValues             : @{returnValue=}
-aliases                  : Keine
+aliases                  : None
                            
-remarks                  : Keine
+remarks                  : None
 alertSet                 : 
 description              : 
 examples                 : 
@@ -183,9 +183,9 @@ Syntax                   : @{syntaxItem=System.Object[]}
 parameters               : @{parameter=System.Object[]}
 inputTypes               : @{inputType=}
 returnValues             : @{returnValue=}
-aliases                  : Keine
+aliases                  : None
                            
-remarks                  : Keine
+remarks                  : None
 alertSet                 : 
 description              : 
 examples                 : 

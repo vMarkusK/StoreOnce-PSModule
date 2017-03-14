@@ -14,7 +14,7 @@ SYNTAX
     Remove-SOCatClient [-Server] <string> [-SOCatClientName] <string> [[-Timeout] <int>]  [<CommonParameters>]
     
     
-PARAMETER
+PARAMETERS
     -SOCatClientName <string>
     
     -Server <string>
@@ -22,18 +22,18 @@ PARAMETER
     -Timeout <int>
     
     <CommonParameters>
-        Dieses Cmdlet unterstützt folgende allgemeine Parameter: "Verbose", "Debug",
-        "ErrorAction", "ErrorVariable", "WarningAction", "WarningVariable",
-        "OutBuffer", "PipelineVariable" und "OutVariable". Weitere Informationen finden Sie unter 
-        "about_CommonParameters" (http://go.microsoft.com/fwlink/?LinkID=113216). 
+        This cmdlet supports the common parameters: Verbose, Debug,
+        ErrorAction, ErrorVariable, WarningAction, WarningVariable,
+        OutBuffer, PipelineVariable, and OutVariable. For more information, see 
+        about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216). 
     
 
-ALIASE
-    Keine
+ALIASES
+    None
     
 
-HINWEISE
-    Keine
+REMARKS
+    None
 
 
 Remove-SOCatStore
@@ -46,7 +46,7 @@ SYNTAX
     Remove-SOCatStore [-Server] <string> [-SSID] <string> [-SOCatStoreName] <string> [[-Timeout] <int>]  [<CommonParameters>]
     
     
-PARAMETER
+PARAMETERS
     -SOCatStoreName <string>
     
     -SSID <string>
@@ -56,18 +56,18 @@ PARAMETER
     -Timeout <int>
     
     <CommonParameters>
-        Dieses Cmdlet unterstützt folgende allgemeine Parameter: "Verbose", "Debug",
-        "ErrorAction", "ErrorVariable", "WarningAction", "WarningVariable",
-        "OutBuffer", "PipelineVariable" und "OutVariable". Weitere Informationen finden Sie unter 
-        "about_CommonParameters" (http://go.microsoft.com/fwlink/?LinkID=113216). 
+        This cmdlet supports the common parameters: Verbose, Debug,
+        ErrorAction, ErrorVariable, WarningAction, WarningVariable,
+        OutBuffer, PipelineVariable, and OutVariable. For more information, see 
+        about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216). 
     
 
-ALIASE
-    Keine
+ALIASES
+    None
     
 
-HINWEISE
-    Keine
+REMARKS
+    None
 
 
 
