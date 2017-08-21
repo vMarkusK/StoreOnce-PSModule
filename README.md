@@ -1,27 +1,22 @@
-<a name="Title">
-# Title
-
 HPE StoreOnce PowerShell Module
-
-|Navigation|
-|-----------------|
-|[About](#About)|
-|[Contribute](#Contribute)|
-|[Features](#Features)|
-|[Enhancements](#Enhancements)|
-
-
-<a name="About">
+===============================
 # About
-[*Back to top*](#Title)
 
-Project Owner: Markus Kraus [@vMarkus_K](https://twitter.com/vMarkus_K)
+## Project Owner:
 
-Project WebSite: [mycloudrevolution.com](http://mycloudrevolution.com/projekte/storeonce-powershell-module/)
+Markus Kraus [@vMarkus_K](https://twitter.com/vMarkus_K)
 
-Project Documentation: [Read the Docs](http://storeonce-psmodule.readthedocs.io/en/latest/index.html)
+MY CLOUD-(R)EVOLUTION [mycloudrevolution.com](http://mycloudrevolution.com/)
 
-Project Details:
+## Project WebSite:
+
+[StoreOnce PowerShell Module](http://mycloudrevolution.com/projekte/storeonce-powershell-module/)
+
+## Project Documentation: 
+
+[Read the Docs - StoreOnce PowerShell Module](http://storeonce-psmodule.readthedocs.io/en/latest/index.html)
+
+## Project Details:
 
 This module leverages the HPE StoreOnce REST API with PowerShell.
 This first cmdlets will be for reporting purposes and after that some basic administrative cmdlets should be added.
@@ -32,18 +27,17 @@ This first cmdlets will be for reporting purposes and after that some basic admi
 + Delete Stores
 + etc.
 
-<a name="Contribute">
+
 # Contribute
-[*Back to top*](#Title)
 
 * Request access to the project Slack Channel (https://mycloudrevolution.slack.com/messages/storeonce-ps/)
 
-Request form: http://mycloudrevolution.com/projekte/storeonce-powershell-module/
+Request form to Slack Channel: http://mycloudrevolution.com/projekte/storeonce-powershell-module/
+
 Or contact me via any other channel...
 
-<a name="Features">
+
 # Features
-[*Back to top*](#Title)
 
 ## Connect-SOAppliance
 
