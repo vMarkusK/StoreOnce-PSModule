@@ -1,5 +1,7 @@
 HPE StoreOnce PowerShell Module
 ===============================
+[![Flattr this git repo](http://api.flattr.com/button/flattr-badge-large.png)](https://flattr.com/submit/auto?user_id=vMarkus_K&url=https://github.com/mycloudrevolution/StoreOnce-PSModule&title=StoreOnce-PSModule&language=Powershell&tags=github&category=software)
+
 # About
 
 ## Project Owner:
