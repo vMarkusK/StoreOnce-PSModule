@@ -1,6 +1,7 @@
 HPE StoreOnce PowerShell Module
 ===============================
 [![Flattr this git repo](http://api.flattr.com/button/flattr-badge-large.png)](https://flattr.com/submit/auto?user_id=vMarkus_K&url=https://github.com/mycloudrevolution/StoreOnce-PSModule&title=StoreOnce-PSModule&language=Powershell&tags=github&category=software)
+[![Help Contribute to Open Source](https://www.codetriage.com/mycloudrevolution/storeonce-psmodule/badges/users.svg)](https://www.codetriage.com/mycloudrevolution/storeonce-psmodule)
 
 # About
 
@@ -14,7 +15,7 @@ MY CLOUD-(R)EVOLUTION [mycloudrevolution.com](http://mycloudrevolution.com/)
 
 [StoreOnce PowerShell Module](http://mycloudrevolution.com/projekte/storeonce-powershell-module/)
 
-## Project Documentation: 
+## Project Documentation:
 
 [Read the Docs - StoreOnce PowerShell Module](http://storeonce-psmodule.readthedocs.io/en/latest/index.html)
 
@@ -143,11 +144,11 @@ Version 0.7
 + Enhanced: More details for Get-SOCatStores
 
 Version 0.6
-+ Enhanced: Parameter Position declaration 
++ Enhanced: Parameter Position declaration
 + Enhanced: Output Reorganization
 
 Version 0.5.2
-+ Enhanced: New Cert Handling 
++ Enhanced: New Cert Handling
 + Enhanced: Cmdlet Set-SOCredentials rewritten
 
 Version 0.5.1
