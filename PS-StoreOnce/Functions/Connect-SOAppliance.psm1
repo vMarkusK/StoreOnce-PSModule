@@ -103,7 +103,7 @@ function Connect-SOAppliance {
 
         }
 
-        $Global:SOConnections += $SOConnection
+	if ($Global:SOConnections.server -notcontains $SOConnection.Server) {$Global:SOConnections += $SOConnection}
 
         $TESTCall = @{uri = "https://$($Global:SOConnections[-1].Server)/storeonceservices/";
                             Method = 'GET';
