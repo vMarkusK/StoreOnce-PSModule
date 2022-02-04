@@ -37,10 +37,10 @@ function Get-SOSIDs {
 				[Array] $Alias = $SIDsResponse.document.servicesets.serviceset.properties.alias
 				[Array] $OverallHealth = $SIDsResponse.document.servicesets.serviceset.properties.overallHealth
 				[Array] $SerialNumber = $SIDsResponse.document.servicesets.serviceset.properties.serialNumber
-				[Array] $CapacityBytes = $SIDsResponse.document.servicesets.serviceset.properties.capacityBytes
-				[Array] $FreeBytes = $SIDsResponse.document.servicesets.serviceset.properties.freeBytes
-				[Array] $UserBytes = $SIDsResponse.document.servicesets.serviceset.properties.userBytes
-				[Array] $DiskBytes = $SIDsResponse.document.servicesets.serviceset.properties.diskBytes
+				[Array] $CapacityBytes = $SIDsResponse.document.servicesets.serviceset.properties.localcapacityBytes
+				[Array] $FreeBytes = $SIDsResponse.document.servicesets.serviceset.properties.localfreeBytes
+				[Array] $UserBytes = $SIDsResponse.document.servicesets.serviceset.properties.localuserBytes
+				[Array] $DiskBytes = $SIDsResponse.document.servicesets.serviceset.properties.localdiskBytes
 				
 				for ($i = 0; $i -lt $SIDCount; $i++ ){		
 					$row = [PSCustomObject] @{

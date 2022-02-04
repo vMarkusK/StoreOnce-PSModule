@@ -103,9 +103,9 @@ function Connect-SOAppliance {
 
         }
 
-        $Global:SOConnections += $SOConnection
+	if ($Global:SOConnections.server -notcontains $SOConnection.Server) {$Global:SOConnections += $SOConnection}
 
-        $TESTCall = @{uri = "https://$($Global:SOConnections[-1].Server)/storeonceservices/";
+        $TESTCall = @{uri = "https://$($Global:SOConnections[-1].Server)/storeonceservices/cluster";
                             Method = 'GET';
                             Headers = @{Authorization = 'Basic ' + $($Global:SOConnections[-1].EncodedPassword);
                                         Accept = 'text/xml'
@@ -113,7 +113,7 @@ function Connect-SOAppliance {
                         } 
                     
         $TESTResponse = Invoke-RestMethod @TESTCall
-        $TESTCount = ($TESTResponse.document.list.item).count
+        $TESTCount = ($TESTResponse.document.cluster.properties.item).count
             
         if ($TESTCount -lt 1) {throw "No valid API Response!"}
 
